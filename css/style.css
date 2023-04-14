@@ -413,7 +413,7 @@ textarea.input {
 #top-header {
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #1E1F29;
+  background-color: #242424;
 }
 
 .header-links li {
@@ -446,7 +446,7 @@ textarea.input {
 #header {
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: #15161D;
+  background-color: #242424;
 }
 
 .header-logo {
@@ -581,7 +581,7 @@ textarea.input {
 }
 
 .cart-dropdown .cart-list .product-widget .product-body .product-price {
-  color: #2B2D42;
+  color: #242424;
 }
 
 .cart-dropdown .cart-btns {
@@ -602,7 +602,7 @@ textarea.input {
 
 .cart-dropdown .cart-btns>a:first-child {
   margin-right: -4px;
-  background-color: #1e1f29;
+  background-color: #242424;
 }
 
 .cart-dropdown .cart-btns>a:hover {
@@ -672,7 +672,7 @@ textarea.input {
     position: fixed;
     left: 0;
     top: 0;
-    background: #15161D;
+    background: #242424;
     height: 100vh;
     max-width: 250px;
     width: 0%;
@@ -996,7 +996,7 @@ textarea.input {
   padding: 10px;
   font-size: 12px;
   line-height: 10px;
-  background: #1e1f29;
+  background: #242424;
   color: #FFF;
   text-transform: uppercase;
   z-index: 10;
@@ -1020,7 +1020,7 @@ textarea.input {
   right: 1px;
   bottom: 1px;
   padding: 15px;
-  background: #1e1f29;
+  background: #242424;
   text-align: center;
   -webkit-transform: translateY(0%);
   -ms-transform: translateY(0%);
@@ -1146,7 +1146,7 @@ textarea.input {
   text-align: center;
   font-size: 10px;
   padding: 0;
-  background: #1e1f29;
+  background: #242424;
   border: none;
   color: #FFF;
 }
@@ -2002,12 +2002,12 @@ textarea.input {
 ===========================================================*/
 
 #footer {
-  background: #15161D;
+  background: #181818;
   color: #B9BABC;
 }
 
 #bottom-footer {
-  background: #1E1F29;
+  background:#242424;
 }
 
 .footer {
@@ -2052,7 +2052,7 @@ textarea.input {
 }
 
 .footer-payments li a {
-  color: #15161D;
+  color: #242424;
   font-size: 36px;
   display: block;
 }
@@ -2083,7 +2083,7 @@ textarea.input {
 
 .slick-prev:before, .slick-next:before {
   font-family: FontAwesome;
-  color: #2B2D42;
+  color: #242424;
 }
 
 .slick-prev:before {
