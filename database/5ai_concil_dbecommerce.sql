@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 30, 2023 alle 23:26
--- Versione del server: 10.4.25-MariaDB
--- Versione PHP: 8.1.10
+-- Creato il: Apr 18, 2023 alle 10:52
+-- Versione del server: 10.4.6-MariaDB
+-- Versione PHP: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -49,6 +50,25 @@ CREATE TABLE `categories` (
   `ID` int(11) NOT NULL,
   `Type` varchar(254) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `categories`
+--
+
+INSERT INTO `categories` (`ID`, `Type`) VALUES
+(1, 'Libri'),
+(2, 'Musica'),
+(3, 'Moda'),
+(4, 'Film'),
+(5, 'Elettronica'),
+(6, 'Giardinaggio'),
+(7, 'Cura della casa'),
+(8, 'Giochi'),
+(9, 'Auto e moto'),
+(10, 'Bellezza'),
+(11, 'Illuminazione'),
+(12, 'Sport'),
+(13, 'Hobby');
 
 -- --------------------------------------------------------
 
@@ -124,6 +144,13 @@ CREATE TABLE `products` (
   `CategoryID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dump dei dati per la tabella `products`
+--
+
+INSERT INTO `products` (`ID`, `Title`, `Description`, `Seller`, `State`, `Price`, `Discount`, `Quantity`, `CategoryID`) VALUES
+(1, 'Delitto e castigo - Fyodor Dostoevskij - Copertina flessibile', '\"Ci sono romanzi che non avrebbero bisogno di introduzioni. Appena iniziamo a leggerli, sin dalle prime pagine ci proiettano in una vita per noi impensabile pochi istanti prima, nella quale tuttavia ci orientiamo a meraviglia. [...] Delitto e castigo è uno di questi romanzi, un\'opera di bruciante attualità, nella quale Dostoevskij ha saputo cogliere a partire dalla sua epoca l\'eco di voci remote nella nostra cultura e oggi più che mai vibranti. Leggendo questo romanzo ti viene subito in mente lo sguardo vuoto e spento di tanti \'eroi\' della nostra cronaca nera, ti risuona nella testa la voce minacciosa del Dio della Genesi che grida a Caino: Caino, che hai fatto? Ora tu sei maledetto dalla terra, sarai errante e vagabondo. E ti chiedi: e se fossi stato io?\" (dalla prefazione di Damiano Rebecchini). Un romanzo decisivo per la successiva narrativa novecentesca, per lo scavo psicologico dei personaggi e la ferocia dell\'analisi emotiva. In una nuova traduzione, l\'immortale storia di sofferenza e salvazione diventata uno dei classici più amati e influenti di tutti i tempi (e di tutte le letterature).', 'Economica Feltrinelli', 'New', 12.35, 0, 235, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -163,11 +190,18 @@ CREATE TABLE `users` (
   `LastName` varchar(32) NOT NULL,
   `E-mail` varchar(64) NOT NULL,
   `Password` varchar(32) NOT NULL,
-  `Indirizzo` varchar(64) NOT NULL,
+  `Indirizzo` text NOT NULL,
   `BirthDate` date NOT NULL,
-  `PhoneNumber` varchar(12) NOT NULL,
+  `PhoneNumber` varchar(16) NOT NULL,
   `Seller` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dump dei dati per la tabella `users`
+--
+
+INSERT INTO `users` (`ID`, `FirstName`, `LastName`, `E-mail`, `Password`, `Indirizzo`, `BirthDate`, `PhoneNumber`, `Seller`) VALUES
+(1, 'Tania', 'Concil', 'concil.tania@gmail.com', '367e784406b900bce694c93eca8f4ffa', 'Via Giacomo Leopardi 29F 22036 Erba(CO) Italy', '2004-07-04', '+393472839592', 1);
 
 -- --------------------------------------------------------
 
@@ -277,7 +311,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT per la tabella `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT per la tabella `orders`
@@ -295,7 +329,7 @@ ALTER TABLE `payment_methods`
 -- AUTO_INCREMENT per la tabella `products`
 --
 ALTER TABLE `products`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `reviews`
@@ -313,7 +347,7 @@ ALTER TABLE `shopping_cart`
 -- AUTO_INCREMENT per la tabella `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT per la tabella `wishlist`

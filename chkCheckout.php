@@ -1,0 +1,1 @@
+<!-- controllo che la carta di credito esista -->
