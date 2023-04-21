@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Login</title>
+		<title>Register</title>
 
  		<!-- Google font -->
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -39,13 +39,17 @@
 
 <body>
     <?php include "navbar.php" ?>
-    <form action="login_chk.php" method="POST">
-    email:<br>
-    <input type="email" id="email" name="email"><br>
-    password:
-    <input type="password" id="password" name="password">
-    <a href="password_refresh.php"> forgot? </a><br>
-    Still not a costumer? <a href="register_page.php">REGISTER NOW!</a>
+    <form action="register_chk.php" method="POST">
+    Your name:
+    <input type="text" id="name" name="name" placeholder="Name Surname" required>
+    Email:<br>
+    <input type="email" id="email" name="email" placeholder="your email" required><br>
+    Phone Number:<br>
+    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phone number"><br>
+    Password:<br>
+    <input type="password" id="password" name="password" placeholder="password" required><br>
+    <input type="password" id="confirmPwd" name="confirmPwd" placeholder="confirm your password" required><br>
+    Already a costumer? <a href="login_page.php">LOGIN NOW!</a>
     <input type="submit" value="login">
     </form>
     <?php include "footer.php" ?>

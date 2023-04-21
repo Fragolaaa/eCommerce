@@ -41,9 +41,9 @@
     <?php include "navbar.php" ?>
     <form action="login_chk.php" method="POST">
     email:<br>
-    <input type="email" id="email" name="email"><br>
-    password:
-    <input type="password" id="password" name="password">
+    <input type="email" id="email" name="email" placeholder="email" required><br>
+    password:<br>
+    <input type="password" id="password" name="password" placeholder="password" required>
     <a href="password_refresh.php"> forgot? </a><br>
     Still not a costumer? <a href="register_page.php">REGISTER NOW!</a>
     <input type="submit" value="login">
