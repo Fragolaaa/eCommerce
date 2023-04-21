@@ -39,7 +39,7 @@
 
 <body>
 	<!-- HEADER -->
-	<?php include "navbar.html"; ?>
+	<?php include "navbar.php"; ?>
 	<!-- /HEADER -->
 
 	<!-- SECTION -->
@@ -901,7 +901,7 @@
 	<!-- /NEWSLETTER -->
 
 	<!-- FOOTER -->
-	<?php include "footer.html"; ?>
+	<?php include "footer.php"; ?>
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
