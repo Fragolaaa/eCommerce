@@ -11,7 +11,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-phone"></i>+123-456-789-1011</a></li>
-                            <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
+                            <li><a href="#"><i class="fa fa-envelope-o"></i>customerService@taniexpress.com</a></li>
                         </ul>
                     </div>
                 </div>
