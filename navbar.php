@@ -1,3 +1,8 @@
+<?php
+ include("database/connection.php");
+ session_start();
+ ?>
+
 <header>
     <!-- TOP HEADER -->
     <div id="top-header">
@@ -32,12 +37,12 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
-                            <select class="input-select">
+                        <form href="products.php" method="get">
+                            <!-- <select class="input-select">
                                 <option value="0">All Categories</option>
                                 <option value="1">Category 01</option>
                                 <option value="1">Category 02</option>
-                            </select>
+                            </select> -->
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
                         </form>
@@ -54,18 +59,66 @@
                                 <i class="fa fa-heart-o"></i>
                                 <span>Your Wishlist</span>
                                 <!-- <div class="qty">2</div> -->
+                                <?php
+                            if (isset($_SESSION["WISHLISTID_"])) {
+
+                                $query = "SELECT COUNT(*) FROM includes JOIN wishlist
+                                ON includes.WishListID = wishlist.ID
+                                WHERE wishlist.ID = '" . $_SESSION["WISHLISTID_"] . "'";
+
+                                $result = $conn->query($query);
+
+
+                                $row = $result->fetch_assoc();
+                                $n = $row["COUNT(*)"];
+                            } else if (isset($_SESSION["WISHLISTID_GuestUser"])) {
+                                $sql = "SELECT COUNT(*) FROM includes JOIN wishlist
+                                ON includes.WishListID = wishlist.ID
+                                WHERE wishlist.Id = '" . $_SESSION["WISHLISTID_GuestUser"] . "'";
+
+                                $result = $conn->query($query);
+
+                                $row = $result->fetch_assoc();
+                                $n = $row["COUNT(*)"];
+                            } else
+                                $n = 0;
+                            echo "<div class='qty'>" . $n . "</div>";
+                            ?>
                             </a>
                         </div>
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
                         <div class="dropdown">
-                            <a href class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                            <a href="shpCart.php" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
                                 <!-- <div class="qty">3</div> -->
+                                <?php
+                            if (isset($_SESSION["CARTID_"])) {
+                                $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
+                                ON contains.CartID = shopping_carts.ID
+                                WHERE shopping_carts.ID = '" . $_SESSION["CARTID_"] . "'";
+
+                                $result = $conn->query($query);
+
+                                $row = $result->fetch_assoc();
+                                $n = $row["COUNT(*)"];
+                            } else if (isset($_SESSION["CARTID_GuestUser"])) {
+                                $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
+                                ON contains.CartID = shopping_carts.ID
+                                WHERE shopping_carts.ID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+
+                                $result = $conn->query($query);
+
+                                $row = $result->fetch_assoc();
+                                $n = $row["COUNT(*)"];
+                            } else
+                                $n = 0;
+                            echo "<div class='qty'>" . $n . "</div>";
+                            ?>
                             </a>
-                            <div class="cart-dropdown">
+                            <!-- <div class="cart-dropdown">
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
@@ -98,7 +151,7 @@
                                     <a href="chechoutPage.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /Cart -->
 
                         <!-- Menu Toogle -->
@@ -126,13 +179,13 @@
     <div class="container">
         <!-- responsive-nav -->
         <div id="responsive-nav">
-            <!-- NAV -->
+            <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">Hot Deals</a></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Smartphones</a></li>
+                <li><a href="product-list.php?filter=HotDeals">Hot Deals</a></li>
+                <li><a href="product-list.php?filter=Trending">Trending</a></li>
+                <li><a href="product-list.php?filter=fashion">Fashion</a></li>
+                <li><a href="product-list.php?filter=Electronics">Electronics</a></li>   
                 <li><a href="#">Cameras</a></li>
                 <li><a href="#">Accessories</a></li>
             </ul>

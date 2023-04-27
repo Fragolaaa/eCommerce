@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +36,24 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+		<?php
+
+    //Logout
+    if (isset($_GET['msg']) && $_GET['msg'] == "Logged out") {
+        unset($_SESSION["ID"]);
+        unset($_SESSION['Username']);
+        unset($_SESSION["IDCart"]);
+        unset($_SESSION["IDWishlist"]);
+    }
+
+    //load cookies 
+    if (isset($_COOKIE["WISHLISTID_GuestUser"])) {
+        $_SESSION["WISHLISTID_GuestUser"] = $_COOKIE["WISHLISTID_GuestUser"];
+    }
+    if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
+        $_SESSION["SHPCARTID_GuestUser"] = $_COOKIE["SHPCARTID_GuestUser"];
+    }
+    ?>
 </head>
 
 <body>
