@@ -74,7 +74,7 @@ session_start();
 
     //15 products/page
     $prodPerPage = 15;
-    //primo prodotto
+    //first product
     $offset = ($prodPerPage * $pag) - $prodPerPage;
 
     $query .= " LIMIT $prodPerPage OFFSET $offset";
@@ -127,7 +127,7 @@ session_start();
                 <?php
                 if (isset($_GET["p"]) && $_GET["p"] != 1) {
                     echo "  <li class='page-item active'>
-                                         <a class='page-link' href='product-list.php?p=" . ($_GET["p"] - 1) . "' tabindex='-1'>Previous</a>
+                                         <a class='page-link' href=products.php?p=" . ($_GET["p"] - 1) . "' tabindex='-1'>Previous</a>
                                          </li>";
                 } else {
                     echo "  <li class='page-item disabled'>
@@ -138,35 +138,35 @@ session_start();
                 if (isset($_GET["p"])) {
                     switch ($_GET["p"]) {
                         case 1:
-                            echo "  <li class='page-item active'><a class='page-link' href='product-list.php?p=1'>1</a></li>
-                                                     <li class='page-item'><a class='page-link' href='product-list.php?p=2'>2</a></li>
-                                                     <li class='page-item'><a class='page-link' href='product-list.php?p=3'>3</a></li>";
+                            echo "  <li class='page-item active'><a class='page-link' href=products.php?p=1'>1</a></li>
+                                                     <li class='page-item'><a class='page-link' href='products.php?p=2'>2</a></li>
+                                                     <li class='page-item'><a class='page-link' href='products.php?p=3'>3</a></li>";
                             break;
                         case 2:
-                            echo "  <li class='page-item'><a class='page-link' href='product-list.php?p=1'>1</a></li>
-                                             <li class='page-item active'><a class='page-link' href='product-list.php?p=2'>2</a></li>
-                                             <li class='page-item'><a class='page-link' href='product-list.php?p=3'>3</a></li>";
+                            echo "  <li class='page-item'><a class='page-link' href='products.php?p=1'>1</a></li>
+                                             <li class='page-item active'><a class='page-link' href='products.php?p=2'>2</a></li>
+                                             <li class='page-item'><a class='page-link' href='products.php?p=3'>3</a></li>";
                             break;
                         case 3:
-                            echo "  <li class='page-item'><a class='page-link' href='product-list.php?p=1'>1</a></li>
-                                                 <li class='page-item'><a class='page-link' href='product-list.php?p=2'>2</a></li>
-                                                 <li class='page-item active'><a class='page-link' href='product-list.php?p=3'>3</a></li>";
+                            echo "  <li class='page-item'><a class='page-link' href='products.php?p=1'>1</a></li>
+                                                 <li class='page-item'><a class='page-link' href='products.php?p=2'>2</a></li>
+                                                 <li class='page-item active'><a class='page-link' href='products'.php?p=3'>3</a></li>";
                             break;
                         default:
                             for ($i = 1; $i < $_GET["p"]; $i++) {
-                                echo "<li class='page-item'><a class='page-link' href='product-list.php?p=$i'>$i</a></li>";
+                                echo "<li class='page-item'><a class='page-link' href='products.php?p=$i'>$i</a></li>";
                             }
-                            echo "<li class='page-item active'><a class='page-link' href='product-list.php?p=" . $_GET["p"] . "'>" . $_GET["p"] . "</a></li>";
+                            echo "<li class='page-item active'><a class='page-link' href='products.php?p=" . $_GET["p"] . "'>" . $_GET["p"] . "</a></li>";
                     }
                     echo "  <li class='page-item active'>
-                                             <a class='page-link' href='product-list.php?p=" . ($_GET["p"] + 1) . "' tabindex='-1'>Next</a>
+                                             <a class='page-link' href='products.php?p=" . ($_GET["p"] + 1) . "' tabindex='-1'>Next</a>
                                          </li>";
                 } else {
-                    echo "  <li class='page-item active'><a class='page-link' href='product-list.php?p=1'>1</a></li>
-                                                     <li class='page-item'><a class='page-link' href='product-list.php?p=2'>2</a></li>
-                                                     <li class='page-item'><a class='page-link' href='product-list.php?p=3'>3</a></li>";
+                    echo "  <li class='page-item active'><a class='page-link' href='products.php?p=1'>1</a></li>
+                                                     <li class='page-item'><a class='page-link' href='products.php?p=2'>2</a></li>
+                                                     <li class='page-item'><a class='page-link' href='products.php?p=3'>3</a></li>";
                     echo "  <li class='page-item active'>
-                                             <a class='page-link' href='product-list.php?p=2' tabindex='-1'>Next</a>
+                                             <a class='page-link' href='products.php?p=2' tabindex='-1'>Next</a>
                                          </li>";
                 }
                 ?>
@@ -174,7 +174,7 @@ session_start();
         </nav>
     </div>
     <!-- Pagination End -->
-    ?>
+    <? include("footer.php")?>
 
 </body>
 
