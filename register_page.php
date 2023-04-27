@@ -40,12 +40,16 @@
 <body>
     <?php include "navbar.php" ?>
     <form action="register_chk.php" method="POST">
-    Your name:
-    <input type="text" id="name" name="name" placeholder="Name Surname" required>
-    Email:<br>
+    First Name:<br>
+    <input type="text" id="FirstName" name="FirstName" placeholder="Name Surname" required><br>
+	Last Name:<br>
+    <input type="text" id="LastName" name="LastName" placeholder="Name Surname" required><br>
+	Email:<br>
     <input type="email" id="email" name="email" placeholder="your email" required><br>
-    Phone Number:<br>
-    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phone number"><br>
+    Birth Date:<br>
+	<input type="date" id="birthDate" name="birthDate" required><br>
+	Phone Number:<br>
+    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="phone number" required><br>
     Password:<br>
     <input type="password" id="password" name="password" placeholder="password" required><br>
     <input type="password" id="confirmPwd" name="confirmPwd" placeholder="confirm your password" required><br>
