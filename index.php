@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,7 +59,7 @@
 	<!-- HEADER -->
 	<?php include "navbar.php"; ?>
 	<!-- /HEADER -->
-
+	<?php include "products.php"; ?>
 	<!-- SECTION -->
 	<div class="section">
 		<!-- container -->

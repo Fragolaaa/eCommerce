@@ -1,6 +1,5 @@
 <?php
 include("database/connection.php");
-session_start();
 ?>
 
 <!DOCTYPE html>
@@ -10,14 +9,13 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products!</title>
+    <title>Products</title>
 </head>
 
 <body>
     <?php
-    include("navbar.php");
     //Filters
-    $query = "SELECT Title, Id, Price, Discount, Quantity FROM products ";
+    $query = "SELECT Title, ID, Price, Discount, Quantity FROM products ";
 
     //single product
     if (isset($_GET["filter"])) {
@@ -79,7 +77,7 @@ session_start();
 
     $query .= " LIMIT $prodPerPage OFFSET $offset";
 
-    $result = $conn->query($sql);
+    $result = $conn->query($query);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             echo "<div class='col-md-2'>
@@ -96,12 +94,12 @@ session_start();
                                              </div>
                                              <div class='product-image d-flex align-items-center'>
                                                  <a href='products.php'>
-                                                     <img src='img/product-" . $row["Id"] . ".jpg' alt='Product Image'>
+                                                     <img src='img/product-" . $row["ID"] . ".jpg' alt='Product Image'>
                                                  </a>
                                                  <div class='product-action'>
-                                                     <a href='check/addToShpCart.php?id=" . $row["Id"] . "&q=1'><i class='fa fa-cart-plus'></i></a>
-                                                     <a href='check/addToWishList.php?id=" . $row["Id"] . "&q=1'><i class='fa fa-heart'></i></a>
-                                                     <a href='productDetail.php?id=" . $row["Id"] . "&q=1'><i class='fa fa-search'></i></a>
+                                                     <a href='check/addToShpCart.php?id=" . $row["ID"] . "&q=1'><i class='fa fa-cart-plus'></i></a>
+                                                     <a href='check/addToWishList.php?id=" . $row["ID"] . "&q=1'><i class='fa fa-heart'></i></a>
+                                                     <a href='productDetail.php?id=" . $row["ID"] . "&q=1'><i class='fa fa-search'></i></a>
                                                  </div>
                                              </div>
                                              <div class='product-price'>";
@@ -110,8 +108,8 @@ session_start();
             else
                 echo "<h3>$" . $row["Price"] . "</h3>";
 
-            if ($row["Pieces"] > 0)
-                echo "<a class='btn' href='checkoutPage.php?id=" . $row["Id"] . "'><i class='fa fa-shopping-cart'></i>Buy Now</a>";
+            if ($row["Quantity"] > 0)
+                echo "<a class='btn' href='checkoutPage.php?id=" . $row["ID"] . "'><i class='fa fa-shopping-cart'></i>Buy Now</a>";
             else
                 echo "<a class='btn soldout'><i class='fa fa-shopping-cart'></i>Sold Out</a>";
             echo "</div></div></div>";
