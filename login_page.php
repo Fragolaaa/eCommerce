@@ -1,3 +1,4 @@
+<?php include "navbar.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,11 +39,11 @@
     </head>
 
 <body>
-    <?php include "navbar.php" ?>
+  
     <form action="login_chk.php" method="POST">
-    email:<br>
+    Email:<br>
     <input type="email" id="email" name="email" placeholder="email" required><br>
-    password:<br>
+    Password:<br>
     <input type="password" id="password" name="password" placeholder="password" required>
     <a href="password_refresh.php"> forgot? </a><br>
     Still not a costumer? <a href="register_page.php">REGISTER NOW!</a>

@@ -1,20 +1,82 @@
 <?php
- include("database/connection.php");
- session_start();
- ?>
+include("database/connection.php");
+session_start();
+?>
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>taniexpress</title>
+
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
+
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
+
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    <?php
+
+    //Logout
+    if (isset($_GET['msg']) && $_GET['msg'] == "Logged out") {
+        unset($_SESSION["ID"]);
+        unset($_SESSION['Username']);
+        unset($_SESSION["IDCart"]);
+        unset($_SESSION["IDWishlist"]);
+    }
+
+    //load cookies 
+    if (isset($_COOKIE["WISHLISTID_GuestUser"])) {
+        $_SESSION["WISHLISTID_GuestUser"] = $_COOKIE["WISHLISTID_GuestUser"];
+    }
+    if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
+        $_SESSION["SHPCARTID_GuestUser"] = $_COOKIE["SHPCARTID_GuestUser"];
+    }
+    ?>
+</head>
 <header>
+
     <!-- TOP HEADER -->
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
                 <li><a href="#"><i class="fa fa-phone"></i> +123-456-789-1011</a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> customerService@taniepress.com</a></li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i> customerService@taniexpress.com</a></li>
             </ul>
             <ul class="header-links pull-right">
-                <li><a href="login_page.php"><i class="fa fa-user-o"></i> My Account</a></li>
-            </ul>
+                <div class="dropdown">
+                    <button class="dropbtn"> My Account</button>
+                    <div class="dropdown-content">
+                        <a href="login_page.php"> Login </a>
+                        <a href="register_page.php">Register</a>
+                    </div>
+                </div>
         </div>
+
+        </ul>
+    </div>
     </div>
     <!-- /TOP HEADER -->
 
@@ -60,30 +122,30 @@
                                 <span>Your Wishlist</span>
                                 <!-- <div class="qty">2</div> -->
                                 <?php
-                            if (isset($_SESSION["WISHLISTID_"])) {
+                                if (isset($_SESSION["WISHLISTID_"])) {
 
-                                $query = "SELECT COUNT(*) FROM includes JOIN wishlist
+                                    $query = "SELECT COUNT(*) FROM includes JOIN wishlist
                                 ON includes.WishListID = wishlist.ID
                                 WHERE wishlist.ID = '" . $_SESSION["WISHLISTID_"] . "'";
 
-                                $result = $conn->query($query);
+                                    $result = $conn->query($query);
 
 
-                                $row = $result->fetch_assoc();
-                                $n = $row["COUNT(*)"];
-                            } else if (isset($_SESSION["WISHLISTID_GuestUser"])) {
-                                $sql = "SELECT COUNT(*) FROM includes JOIN wishlist
+                                    $row = $result->fetch_assoc();
+                                    $n = $row["COUNT(*)"];
+                                } else if (isset($_SESSION["WISHLISTID_GuestUser"])) {
+                                    $sql = "SELECT COUNT(*) FROM includes JOIN wishlist
                                 ON includes.WishListID = wishlist.ID
                                 WHERE wishlist.Id = '" . $_SESSION["WISHLISTID_GuestUser"] . "'";
 
-                                $result = $conn->query($query);
+                                    $result = $conn->query($query);
 
-                                $row = $result->fetch_assoc();
-                                $n = $row["COUNT(*)"];
-                            } else
-                                $n = 0;
-                            echo "<div class='qty'>" . $n . "</div>";
-                            ?>
+                                    $row = $result->fetch_assoc();
+                                    $n = $row["COUNT(*)"];
+                                } else
+                                    $n = 0;
+                                echo "<div class='qty'>" . $n . "</div>";
+                                ?>
                             </a>
                         </div>
                         <!-- /Wishlist -->
@@ -95,30 +157,30 @@
                                 <span>Your Cart</span>
                                 <!-- <div class="qty">3</div> -->
                                 <?php
-                            if (isset($_SESSION["CARTID_"])) {
-                                $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
+                                if (isset($_SESSION["CARTID_"])) {
+                                    $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
                                 ON contains.CartID = shopping_carts.ID
                                 WHERE shopping_carts.ID = '" . $_SESSION["CARTID_"] . "'";
 
-                                $result = $conn->query($query);
+                                    $result = $conn->query($query);
 
-                                $row = $result->fetch_assoc();
-                                $n = $row["COUNT(*)"];
-                            } else if (isset($_SESSION["CARTID_GuestUser"])) {
-                                $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
+                                    $row = $result->fetch_assoc();
+                                    $n = $row["COUNT(*)"];
+                                } else if (isset($_SESSION["CARTID_GuestUser"])) {
+                                    $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
                                 ON contains.CartID = shopping_carts.ID
                                 WHERE shopping_carts.ID = '" . $_SESSION["CARTID_GuestUser"] . "'";
 
-                                $result = $conn->query($query);
+                                    $result = $conn->query($query);
 
-                                $row = $result->fetch_assoc();
-                                $n = $row["COUNT(*)"];
-                            } else
-                                $n = 0;
-                            echo "<div class='qty'>" . $n . "</div>";
-                            ?>
+                                    $row = $result->fetch_assoc();
+                                    $n = $row["COUNT(*)"];
+                                } else
+                                    $n = 0;
+                                echo "<div class='qty'>" . $n . "</div>";
+                                ?>
                             </a>
-                            <!-- <div class="cart-dropdown">
+                            <div class="cart-dropdown">
                                 <div class="cart-list">
                                     <div class="product-widget">
                                         <div class="product-img">
@@ -151,26 +213,26 @@
                                     <a href="chechoutPage.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                        </div> -->
-                        <!-- /Cart -->
-
-                        <!-- Menu Toogle -->
-                        <div class="menu-toggle">
-                            <a href="#">
-                                <i class="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
                         </div>
-                        <!-- /Menu Toogle -->
+                            <!-- /Cart -->
+
+                            <!-- Menu Toogle -->
+                            <div class="menu-toggle">
+                                <a href="#">
+                                    <i class="fa fa-bars"></i>
+                                    <span>Menu</span>
+                                </a>
+                            </div>
+                            <!-- /Menu Toogle -->
+                        </div>
                     </div>
+                    <!-- /ACCOUNT -->
                 </div>
-                <!-- /ACCOUNT -->
+                <!-- row -->
             </div>
-            <!-- row -->
+            <!-- container -->
         </div>
-        <!-- container -->
-    </div>
-    <!-- /MAIN HEADER -->
+        <!-- /MAIN HEADER -->
 </header>
 
 <!-- NAVIGATION -->
@@ -181,13 +243,20 @@
         <div id="responsive-nav">
             <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="product-list.php?filter=HotDeals">Hot Deals</a></li>
-                <li><a href="product-list.php?filter=Trending">Trending</a></li>
-                <li><a href="product-list.php?filter=fashion">Fashion</a></li>
-                <li><a href="product-list.php?filter=Electronics">Electronics</a></li>   
-                <li><a href="#">Cameras</a></li>
-                <li><a href="#">Accessories</a></li>
+                <li class="active"><a href="index.php">Home</a></li>
+                <li class="active"><a data-toggle="tab" href="products.php?filter=Libri">Libri</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Musica">Musica</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Fashion">Fashion</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Film">Film</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Elettronica">Elettronica</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Giardinaggio">Giardinaggio</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=CuraDellaCasa">Cura della casa</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Giochi">Giochi</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Auto e Moto">Auto e Moto</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Bellezza">Bellezza</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Illuminazione">Illuminazione</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Sport">Sport</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Hobby">Hobby</a></li>
             </ul>
             <!-- /NAV -->
         </div>

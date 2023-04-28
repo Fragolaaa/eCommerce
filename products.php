@@ -35,15 +35,15 @@ include("database/connection.php");
             case "review":
                 $query .= "JOIN reviews ON products.ID = reviews.ArticleID GROUP BY reviews.ArticleID ORDER BY AVG(Stars) DESC";
                 break;
-            case "<25":
-                $query .= "WHERE (Price * (100 - Discount) / 100) < 25";
-                break;
-            case "<50":
-                $query .= "WHERE (Price * (100 - Discount) / 100) > 25 AND (Price * (100 - Discount) / 100) < 50";
-                break;
-            case ">50":
-                $query .= "WHERE (Price * (100 - Discount) / 100) > 50";
-                break;
+            // case "<25":
+            //     $query .= "WHERE (Price * (100 - Discount) / 100) < 25";
+            //     break;
+            // case "<50":
+            //     $query .= "WHERE (Price * (100 - Discount) / 100) > 25 AND (Price * (100 - Discount) / 100) < 50";
+            //     break;
+            // case ">50":
+            //     $query .= "WHERE (Price * (100 - Discount) / 100) > 50";
+            //     break;
             default:
                 $query .= "WHERE Title LIKE '%" . $_GET["filter"] . "%'";
                 break;

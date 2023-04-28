@@ -1,3 +1,4 @@
+<?php include "navbar.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,7 +39,7 @@
     </head>
 
 <body>
-    <?php include "navbar.php" ?>
+
     <form action="register_chk.php" method="POST">
     First Name:<br>
     <input type="text" id="FirstName" name="FirstName" placeholder="Name Surname" required><br>
