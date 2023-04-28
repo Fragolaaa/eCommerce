@@ -37,24 +37,7 @@ session_start();
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-    <?php
 
-    //Logout
-    if (isset($_GET['msg']) && $_GET['msg'] == "Logged out") {
-        unset($_SESSION["ID"]);
-        unset($_SESSION['Username']);
-        unset($_SESSION["IDCart"]);
-        unset($_SESSION["IDWishlist"]);
-    }
-
-    //load cookies 
-    if (isset($_COOKIE["WISHLISTID_GuestUser"])) {
-        $_SESSION["WISHLISTID_GuestUser"] = $_COOKIE["WISHLISTID_GuestUser"];
-    }
-    if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
-        $_SESSION["SHPCARTID_GuestUser"] = $_COOKIE["SHPCARTID_GuestUser"];
-    }
-    ?>
 </head>
 <header>
 
@@ -100,11 +83,11 @@ session_start();
                 <div class="col-md-6">
                     <div class="header-search">
                         <form href="products.php" method="get">
-                            <!-- <select class="input-select">
+                            <select class="input-select">
                                 <option value="0">All Categories</option>
                                 <option value="1">Category 01</option>
                                 <option value="1">Category 02</option>
-                            </select> -->
+                            </select>
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
                         </form>
@@ -245,18 +228,15 @@ session_start();
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
                 <li class="active"><a data-toggle="tab" href="products.php?filter=Libri">Libri</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Musica">Musica</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Musica&Film">Musica&Film</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Fashion">Fashion</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Film">Film</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Elettronica">Elettronica</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Giardinaggio">Giardinaggio</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=CuraDellaCasa">Cura della casa</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Casa">Casa</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Giochi">Giochi</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Auto e Moto">Auto e Moto</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Bellezza">Bellezza</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Illuminazione">Illuminazione</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Sport">Sport</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Hobby">Hobby</a></li>
+                <li><a data-toggle="tab" href="products.php?filter=Sport&Hobby">Sport&Hobby</a></li>
             </ul>
             <!-- /NAV -->
         </div>
