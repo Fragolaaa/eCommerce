@@ -94,7 +94,7 @@ include("database/connection.php");
                                              </div>
                                              <div class='product-image d-flex align-items-center'>
                                                  <a href='products.php'>
-                                                     <img src='img/product-" . $row["ID"] . ".jpg' alt='Product Image'>
+                                                     <img src='imgs/product-" . $row["ID"] . ".jpg' alt='Product Image'>
                                                  </a>
                                                  <div class='product-action'>
                                                      <a href='check/addToShpCart.php?id=" . $row["ID"] . "&q=1'><i class='fa fa-cart-plus'></i></a>

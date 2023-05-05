@@ -37,9 +37,16 @@
 
     </head>
 	<body>
-
-
-		
+	<?php
+                                 $query = "SELECT * FROM shopping_cart WHERE userID is ".$_SESSION["ID"];
+                                 $result = $conn->query($query);
+                             
+                                 //controllo
+                                 if ($result->num_rows > 0) {
+                                     $row = $result->fetch_assoc();
+                                    
+                                 }
+                                ?>	
 		<?php include "footer.php" ?>
 		<!-- /FOOTER -->
 

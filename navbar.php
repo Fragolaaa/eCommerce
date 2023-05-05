@@ -249,16 +249,6 @@ session_start();
                                 ?>
 
                         </ul>
-                <li class="active"><a data-toggle="tab" href="products.php?filter=Libri">Libri</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Musica&Film">Musica&Film</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Fashion">Fashion</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Elettronica">Elettronica</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Giardinaggio">Giardinaggio</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Casa">Casa</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Giochi">Giochi</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Auto e Moto">Auto e Moto</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Bellezza">Bellezza</a></li>
-                <li><a data-toggle="tab" href="products.php?filter=Sport&Hobby">Sport&Hobby</a></li>
             </ul>
             <!-- /NAV -->
         </div>
