@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "5ai_concil_dbecommerce";
+$dbname = "my_conciltania";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
