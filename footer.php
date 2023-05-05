@@ -8,7 +8,8 @@
                 <div class="col-md-3 col-xs-6">
                     <div class="footer">
                         <h3 class="footer-title">About Us</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+                            ut.</p>
                         <ul class="footer-links">
                             <li><a href="#"><i class="fa fa-phone"></i>+123-456-789-1011</a></li>
                             <li><a href="#"><i class="fa fa-envelope-o"></i>customerService@taniexpress.com</a></li>
@@ -20,11 +21,17 @@
                     <div class="footer">
                         <h3 class="footer-title">Categories</h3>
                         <ul class="footer-links">
-                            <li><a href="#">Hot deals</a></li>
-                            <li><a href="#">Laptops</a></li>
-                            <li><a href="#">Smartphones</a></li>
-                            <li><a href="#">Cameras</a></li>
-                            <li><a href="#">Accessories</a></li>
+                            <?php
+                            $query = "SELECT Type FROM categories";
+                            $result = $conn->query($query);
+
+                            //controllo
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc())
+                                    echo "<li><a href='products.php?filter=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                            }
+                            ?>
+
                         </ul>
                     </div>
                 </div>
@@ -79,7 +86,7 @@
                     </ul>
                 </div>
             </div>
-                <!-- /row -->
+            <!-- /row -->
         </div>
         <!-- /container -->
     </div>

@@ -1,6 +1,6 @@
 <?php
 include("database/connection.php");
-
+session_start();
 //check password
 
 if (strlen($_POST["password"]) < 8) {

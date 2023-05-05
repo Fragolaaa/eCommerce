@@ -42,11 +42,11 @@
 
     <form action="register_chk.php" method="POST">
     First Name:<br>
-    <input type="text" id="FirstName" name="FirstName" placeholder="Name Surname" required><br>
+    <input type="text" id="FirstName" name="FirstName" placeholder="Mario" required><br>
 	Last Name:<br>
-    <input type="text" id="LastName" name="LastName" placeholder="Name Surname" required><br>
+    <input type="text" id="LastName" name="LastName" placeholder="Rossi" required><br>
 	Email:<br>
-    <input type="email" id="email" name="email" placeholder="your email" required><br>
+    <input type="email" id="email" name="email" placeholder="mario.rossi@taniexpress.com" required><br>
     Birth Date:<br>
 	<input type="date" id="birthDate" name="birthDate" required><br>
 	Phone Number:<br>

@@ -1,5 +1,6 @@
 <?php
 include("database/connection.php");
+// include("chkSession.php");
 session_start();
 ?>
 
@@ -236,6 +237,18 @@ session_start();
             <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
+                <?php
+                                 $query = "SELECT Type FROM categories";
+                                 $result = $conn->query($query);
+                             
+                                 //controllo
+                                 if ($result->num_rows > 0) {
+                                     while ($row = $result->fetch_assoc())
+                                         echo "<li><a href='products.php?filter=".$row['Type']."'>".$row['Type']."</a></li>";
+                                 }
+                                ?>
+
+                        </ul>
                 <li class="active"><a data-toggle="tab" href="products.php?filter=Libri">Libri</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Musica&Film">Musica&Film</a></li>
                 <li><a data-toggle="tab" href="products.php?filter=Fashion">Fashion</a></li>
