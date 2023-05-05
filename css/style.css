@@ -2194,11 +2194,12 @@ textarea.input {
 
 /* Dropdown Button */
 .dropbtn {
-  background-color: #161616;
-  color: rgb(37, 37, 37);
+  background-color: #4e4e4e;
+  color: rgb(255, 255, 255);
   padding: 16px;
   font-size: 16px;
   border: none;
+  border-radius: 20%;
 }
 
 /* The container <div> - needed to position the dropdown content */
@@ -2211,25 +2212,25 @@ textarea.input {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #ffffff;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
+  color: rgb(0, 0, 0);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {background-color: rgb(172, 19, 19);}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropbtn {background-color: #a01a1a;}

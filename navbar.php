@@ -85,8 +85,17 @@ session_start();
                         <form href="products.php" method="get">
                             <select class="input-select">
                                 <option value="0">All Categories</option>
-                                <option value="1">Category 01</option>
-                                <option value="1">Category 02</option>
+                                <?php
+                                 $query = "SELECT Type FROM categories";
+                                 $result = $conn->query($query);
+                             
+                                 //controllo
+                                 if ($result->num_rows > 0) {
+                                     while ($row = $result->fetch_assoc())
+                                         echo "<option value=".$row['ID'].">".$row['Type']."</option>";
+                                 }
+                                ?>
+                                
                             </select>
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>

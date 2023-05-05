@@ -54,9 +54,10 @@
     Password:<br>
     <input type="password" id="password" name="password" placeholder="password" required><br>
     <input type="password" id="confirmPwd" name="confirmPwd" placeholder="confirm your password" required><br>
-    Already a costumer? <a href="login_page.php">LOGIN NOW!</a>
-    <input type="submit" value="login">
+	Register as a seller? <input type="radio" name="seller" value="Yes"> Yes <input type="radio" name="seller" value="No"> No<br>
+	<input type="submit" value="Register">
     </form>
+	Already a costumer? <a href="login_page.php">LOGIN NOW!</a>
     <?php include "footer.php" ?>
 
     <!-- jQuery Plugins -->

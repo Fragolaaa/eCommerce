@@ -26,6 +26,11 @@ if (strcmp($password, $confirmPwd) == 0) {
     $birthDate = $_POST["birthDate"];
     $phoneNumber = $_POST["phoneNumber"];
     $email = $_POST["email"];
+    $seller = $_POST["seller"];
+        if($seller === "Yes")
+            $seller = 1;
+        else 
+            $seller = 0;
 
     //email already registered?
     $query = "SELECT email FROM users";
@@ -41,8 +46,8 @@ if (strcmp($password, $confirmPwd) == 0) {
     }
 
     //nuovo utente
-    $query = $conn->prepare("INSERT INTO users (FirstName, LastName, BirthDate, E-mail, PhoneNumber, Password) VALUES (?,?,?,?,?,?)");
-    $query->bind_param('sssssss', $firstName, $lastName, $birthDate, $email, $phoneNumber, $password);
+    $query = $conn->prepare("INSERT INTO users (FirstName, LastName, E-mail, Password, BirthDate, PhoneNumber, Seller) VALUES (?,?,?,?,?,?,?)");
+    $query->bind_param('ssssssi', $firstName, $lastName, $birthDate, $email, $phoneNumber, $password, $seller);
     if ($query->execute() === true) {
         //se creato correttamente l'utente creo un suo carrello tramite l'id
         $sql = "SELECT ID FROM users WHERE E-mail = '$email'";

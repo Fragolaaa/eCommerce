@@ -4,10 +4,10 @@ include("database/connection.php");
 session_start();
 
 $email = $_POST['email'];
-$password = md5($_POST['password']);
+$password = md5($_POST['password']."_".$email);
 
 $query = $conn->prepare("SELECT Id, E-mail, Password FROM users WHERE E-mail = ? AND Password = ?");
-$query->bind_param('sss', $email, $password);
+$query->bind_param('iss', $email, $password);
 $query->execute();
 $result = $query->get_result();
 
