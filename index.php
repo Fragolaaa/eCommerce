@@ -1,4 +1,7 @@
-<?php include "navbar.php"; ?>
+<?php 
+include "navbar.php"; 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,10 +81,10 @@
 									$result = $conn->query($query);
 
 									//controllo
-									if ($result->num_rows > 0) {
-										while ($row = $result->fetch_assoc())
-
-									}
+									// if ($result->num_rows > 0) {
+									// 	while ($row = $result->fetch_assoc())
+											
+									// }
 									?>
 									<div class="product">
 										<div class="product-img">

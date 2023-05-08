@@ -1,4 +1,7 @@
-<?php include "navbar.php" ?>
+<?php 
+include "navbar.php";
+session_start(); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -37,16 +40,127 @@
 
     </head>
 	<body>
-	<?php
-                                 $query = "SELECT * FROM shopping_cart WHERE userID is ".$_SESSION["ID"];
-                                 $result = $conn->query($query);
-                             
-                                 //controllo
-                                 if ($result->num_rows > 0) {
-                                     $row = $result->fetch_assoc();
-                                    
-                                 }
-                                ?>	
+	<div class="cart-page">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="cart-page-inner">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-middle">
+
+                                    <?php
+                                    $sql = "";
+                                    if (isset($_SESSION["CARTID_"]))
+                                        $sql = "SELECT products.ID, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
+                                    else if (isset($_SESSION["IDCartGuest"]))
+                                        $sql = "SELECT products.Id, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+                                    if ($sql != "") {
+                                        $result = $conn->query($sql);
+
+                                        $result = $conn->query($sql);
+
+                                        if ($result->num_rows > 0) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                echo "<tr>
+                                                    <td>
+                                                        <div class='img pl-2'>
+                                                            <a href='productDetail.php?id=" . $row["ID"] . "'><img src='img/product-" . $row["ID"] . ".jpg' alt='Image'></a>
+                                                            <p>" . $row["Title"] . "</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>$" . $row["Price"] . "</td>
+                                                    <td>" . $row["Discount"] . "%</td>
+                                                    <td>
+                                                        <div class='qty'>
+                                                            <button class='btn-minus' onclick='toUpdateQuantityCart(" . $row["ID"] . "," . ($row["Quantity"] - 1) . ", " . $row["Amount"] . ")'><i class='fa fa-minus'></i></button>
+                                                            <input class='pb-1' type='text' name='q' value='" . $row["Quantity"] . "' min=1 max=" . $row["Amount"] . "'>
+                                                            <button class='btn-plus' onclick='toUpdateQuantityCart(" . $row["ID"] . "," . ($row["Quantity"] + 1) . ", " . $row["Amount"] . ")'><i class='fa fa-plus'></i></button>
+                                                        </div>
+                                                    </td>";
+
+                                                if ($row["Discount"] != 0)
+                                                    echo "<td><s>$" . $row["Price"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Quantity"] . "</td>";
+                                                else
+                                                    echo "<td>$" . $row["Price"] * $row["Quantity"] . "</td>";
+
+                                                echo "<td><button onclick='RemoveFrom_Cart(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td></tr>";
+                                            }
+                                        } else {
+                                            echo "<tr><td>No products here :(</td><td></td><td></td><td></td><td></td><td></td></tr>";
+                                        }
+                                    } else {
+                                        echo "<tr><td>No products here :(</td><td></td><td></td><td></td><td></td><td></td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart-page-inner">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="cart-summary">
+                                    <div class="cart-content">
+                                        <h1>Cart Summary</h1>
+                                        <?php
+                                        $sql = "";
+                                        $totPrice = 0;
+                                        if (isset($_SESSION["CARTID_"]))
+                                            $sql = "SELECT Price, Discount, Quantity FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
+                                        else if (isset($_SESSION["CARTID_GuestUser"]))
+                                            $sql = "SELECT Price, Discount, Quantity FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+                                        if ($sql != "") {
+                                            $result = $conn->query($sql);
+
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    if ($row["Discount"] != 0)
+                                                        $totPrice += round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Quantity"];
+                                                    else
+                                                        $totPrice += $row["Price"] * $row["Quantity"];
+                                                }
+                                            }
+                                        }
+                                        echo "<p>Sub Total<span>$" . $totPrice . "</span></p>
+                                              <p>Shipping Cost<span> $4.99 </span></p>                                        
+                                              <h2>Grand Total <span>$" . ($totPrice + 4.99) . "</span></h2>";
+                                        ?>
+                                    </div>
+        
+                                        <div class="cart-btn">
+                                            <?php
+                                            if (isset($_SESSION["CARTID_"]) || isset($_SESSION["CARTID_GuestUser"]))
+                                                echo '  <button onclick="CleanCart()">Clear All</button>
+                                                        <button onclick="Checkout()">Checkout</button>';
+                                            else
+                                                echo '  <button onclick="CleanCart()" disabled>Clear All</button>
+                                                        <button onclick="Checkout()" disabled>Checkout</button>';
+                                            ?>
+                                        </div>
+                                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Cart End -->
 		<?php include "footer.php" ?>
 		<!-- /FOOTER -->
 

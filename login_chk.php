@@ -1,13 +1,12 @@
 <?php
-include("database/connection.php");
-
+include "./database/connection.php";
 session_start();
-
 $email = $_POST['email'];
 $password = md5($_POST['password']."_".$email);
 
-$query = $conn->prepare("SELECT ID, E-mail, Password FROM users WHERE E-mail = ? AND Password = ?");
-$query->bind_param('iss', $email, $password);
+$query = $conn->prepare("SELECT ID, Email, Password FROM users WHERE Email = ? AND Password = ?");
+print_r($conn->error_list);
+$query->bind_param('ss', $email, $password);
 $query->execute();
 $result = $query->get_result();
 
@@ -15,10 +14,10 @@ if ($result->num_rows > 0) {
   $row = $result->fetch_assoc();
   //save session
   $_SESSION['ID'] = $row['ID'];
-  $_SESSION['Username'] = $row['Username'];
+  $_SESSION['USERNAME'] = $row['Username'];
 
   //last user's cart
-  $sql = $conn->prepare("SELECT MAX(ID) FROM shopping_cart WHERE UserID = ?");
+  $sql = $conn->prepare("SELECT ID FROM shopping_cart WHERE UserID = ?");
   $sql->bind_param('i', $_SESSION['ID']);
   $sql->execute();
   $result = $sql->get_result();

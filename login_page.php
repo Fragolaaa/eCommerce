@@ -46,9 +46,9 @@
     Password:<br>
     <input type="password" id="password" name="password" placeholder="password" required>
     <a href="password_refresh.php"> forgot? </a><br>
-    Still not a costumer? <a href="register_page.php">REGISTER NOW!</a>
     <input type="submit" value="login">
-    </form>
+    </form><br>
+	Still not a costumer? <a href="register_page.php">REGISTER NOW!</a>
     <?php include "footer.php" ?>
 
     <!-- jQuery Plugins -->

@@ -1,3 +1,15 @@
+<?php
+include("db/connection.php");
+session_start();
+
+if (isset($_GET['seller']) && $_GET['seller'] == 1) {
+    $sql = $conn->prepare("UPDATE users SET Seller = ? WHERE Id = ?");
+    $sql->bind_param('ii', $_GET["seller"], $_SESSION["ID"]);
+    $sql->execute();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>

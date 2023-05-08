@@ -51,11 +51,21 @@ session_start();
             </ul>
             <ul class="header-links pull-right">
                 <div class="dropdown">
-                    <button class="dropbtn"> My Account</button>
-                    <div class="dropdown-content">
-                        <a href="login_page.php"> Login </a>
-                        <a href="register_page.php">Register</a>
-                    </div>
+                    <?php
+                    if (isset($_SESSION["USERNAME"])) {
+                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>" . $_SESSION["USERNAME"] . "</a>
+                                <div class='dropdown-content'>
+                                    <a href='userAccount.php' class='dropdown-item userDropdown' style='color:white'>My Account</a>
+                                    <a href='logout.php?' class='dropdown-item userDropdown'>Logout</a>
+                                </div>";
+                    } else {
+                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'>Account</a>
+                                <div class='dropdown-content'>
+                                    <a href='login_page.php' class='dropdown-item userDropdown'>Login</a>
+                                    <a href='register_page.php' class='dropdown-item userDropdown'>Register</a>
+                                </div>";
+                    }
+                    ?>
                 </div>
         </div>
 
@@ -87,16 +97,16 @@ session_start();
                             <select class="input-select">
                                 <option value="0">All Categories</option>
                                 <?php
-                                 $query = "SELECT Type FROM categories";
-                                 $result = $conn->query($query);
-                             
-                                 //controllo
-                                 if ($result->num_rows > 0) {
-                                     while ($row = $result->fetch_assoc())
-                                         echo "<option value=".$row['ID'].">".$row['Type']."</option>";
-                                 }
+                                $query = "SELECT Type FROM categories";
+                                $result = $conn->query($query);
+
+                                //controllo
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc())
+                                        echo "<option value=" . $row['ID'] . ">" . $row['Type'] . "</option>";
+                                }
                                 ?>
-                                
+
                             </select>
                             <input class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
@@ -112,7 +122,7 @@ session_start();
                         <div>
                             <a href="wishList.php">
                                 <i class="fa fa-heart-o"></i>
-                                <span>Your Wishlist</span>
+                                <span>Your wishlist</span>
                                 <!-- <div class="qty">2</div> -->
                                 <?php
                                 if (isset($_SESSION["WISHLISTID_"])) {
@@ -144,10 +154,10 @@ session_start();
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown">
-                            <a href="shpCart.php" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                        <div>
+                            <a href="shpCart.php">
                                 <i class="fa fa-shopping-cart"></i>
-                                <span>Your Cart</span>
+                                <span>Your cart</span>
                                 <!-- <div class="qty">3</div> -->
                                 <?php
                                 if (isset($_SESSION["CARTID_"])) {
@@ -173,59 +183,26 @@ session_start();
                                 echo "<div class='qty'>" . $n . "</div>";
                                 ?>
                             </a>
-                            <div class="cart-dropdown">
-                                <div class="cart-list">
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="./img/product01.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-
-                                    <div class="product-widget">
-                                        <div class="product-img">
-                                            <img src="./img/product02.png" alt="">
-                                        </div>
-                                        <div class="product-body">
-                                            <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                            <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                        </div>
-                                        <button class="delete"><i class="fa fa-close"></i></button>
-                                    </div>
-                                </div>
-                                <div class="cart-summary">
-                                    <small>3 Item(s) selected</small>
-                                    <h5>SUBTOTAL: $2940.00</h5>
-                                </div>
-                                <div class="cart-btns">
-                                    <a href="shpCart.php">View Cart</a>
-                                    <a href="chechoutPage.php">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
                         </div>
-                            <!-- /Cart -->
+                        <!-- /Cart -->
 
-                            <!-- Menu Toogle -->
-                            <div class="menu-toggle">
-                                <a href="#">
-                                    <i class="fa fa-bars"></i>
-                                    <span>Menu</span>
-                                </a>
-                            </div>
-                            <!-- /Menu Toogle -->
+                        <!-- Menu Toogle -->
+                        <div class="menu-toggle">
+                            <a href="#">
+                                <i class="fa fa-bars"></i>
+                                <span>Menu</span>
+                            </a>
                         </div>
+                        <!-- /Menu Toogle -->
                     </div>
-                    <!-- /ACCOUNT -->
                 </div>
-                <!-- row -->
+                <!-- /ACCOUNT -->
             </div>
-            <!-- container -->
+            <!-- row -->
         </div>
-        <!-- /MAIN HEADER -->
+        <!-- container -->
+    </div>
+    <!-- /MAIN HEADER -->
 </header>
 
 <!-- NAVIGATION -->
@@ -238,17 +215,17 @@ session_start();
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a href="index.php">Home</a></li>
                 <?php
-                                 $query = "SELECT Type FROM categories";
-                                 $result = $conn->query($query);
-                             
-                                 //controllo
-                                 if ($result->num_rows > 0) {
-                                     while ($row = $result->fetch_assoc())
-                                         echo "<li><a href='products.php?filter=".$row['Type']."'>".$row['Type']."</a></li>";
-                                 }
-                                ?>
+                $query = "SELECT Type FROM categories";
+                $result = $conn->query($query);
 
-                        </ul>
+                //controllo
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc())
+                        echo "<li><a href='products.php?filter=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                }
+                ?>
+
+            </ul>
             </ul>
             <!-- /NAV -->
         </div>
