@@ -52,9 +52,9 @@ session_start();
                 <div class="dropdown">
                     <?php
                     if (isset($_SESSION["USERNAME"])) {
-                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown'>" . $_SESSION["USERNAME"] . "</a>
+                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'>" . $_SESSION["USERNAME"] . "</a>
                                 <div class='dropdown-content'>
-                                    <a href='userAccount.php' class='dropdown-item userDropdown' style='color:white'>My Account</a>
+                                    <a href='userAccount.php' class='dropdown-item userDropdown'>My Account</a>
                                     <a href='logout.php?' class='dropdown-item userDropdown'>Logout</a>
                                 </div>";
                     } else {
