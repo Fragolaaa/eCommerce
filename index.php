@@ -2,6 +2,7 @@
 include "navbar.php"; 
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,21 +42,6 @@ session_start();
 
 	<?php
 
-	//Logout
-	if (isset($_GET['msg']) && $_GET['msg'] == "Logged out") {
-		unset($_SESSION["ID"]);
-		unset($_SESSION['Username']);
-		unset($_SESSION["IDCart"]);
-		unset($_SESSION["IDWishlist"]);
-	}
-
-	//load cookies 
-	if (isset($_COOKIE["WISHLISTID_GuestUser"])) {
-		$_SESSION["WISHLISTID_GuestUser"] = $_COOKIE["WISHLISTID_GuestUser"];
-	}
-	if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
-		$_SESSION["SHPCARTID_GuestUser"] = $_COOKIE["SHPCARTID_GuestUser"];
-	}
 	?>
 </head>
 

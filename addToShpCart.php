@@ -26,7 +26,7 @@ if (isset($_SESSION["CARTID_"])) {                       //logged user
 
 if (isset($CartID) && isset($ProdID) && $_GET["q"] != null && $_GET["q"] != 0) {
     //product already in the cart?
-    $sql = $conn->prepare("SELECT Amount FROM contains WHERE CartID = ? AND ArticleID = ?");
+    $sql = $conn->prepare("SELECT Amount FROM contains WHERE CartID = ? AND ProductID = ?");
     $sql->bind_param('ii', $CartID, $ProdID);
     $sql->execute();
     $result = $sql->get_result();
@@ -42,9 +42,9 @@ if (isset($CartID) && isset($ProdID) && $_GET["q"] != null && $_GET["q"] != 0) {
         $result = $sql->get_result();
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            if ($row["Pieces"] >= $newQuantity) {
+            if ($row["Quantity"] >= $newQuantity) {
                 //update product's amount in the cart
-                $sql = $conn->prepare("UPDATE contains SET Amount = ? WHERE CartID = ? AND ArticleID = ?");
+                $sql = $conn->prepare("UPDATE contains SET Amount = ? WHERE CartID = ? AND ProductID = ?");
                 $sql->bind_param("iii", $newQuantity, $CartID, $ProdID);
                 $sql->execute();
                 header("location:index.php?msg=Added to cart successfully!&type=success");
@@ -60,9 +60,9 @@ if (isset($CartID) && isset($ProdID) && $_GET["q"] != null && $_GET["q"] != 0) {
         $result = $sql->get_result();
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            if ($row["Pieces"] >= $_GET["q"]) {
+            if ($row["Quantity"] >= $_GET["q"]) {
                 //aggiungo articolo
-                $sql = $conn->prepare("INSERT INTO contains (CartID, ArticleID, Amount) VALUES (?,?,?)");
+                $sql = $conn->prepare("INSERT INTO contains (CartID, ProductID, Amount) VALUES (?,?,?)");
                 $sql->bind_param('iii', $CartID, $ProdID, $_GET['q']);
                 $sql->execute();
                 header("location:index.php?msg=Added to cart successfully!&type=success");

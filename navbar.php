@@ -1,6 +1,15 @@
 <?php
 include("database/connection.php");
 session_start();
+
+
+//load cookies 
+if (isset($_COOKIE["WISHLISTID_GuestUser"])) {
+    $_SESSION["WISHLISTID_GuestUser"] = $_COOKIE["WISHLISTID_GuestUser"];
+}
+if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
+    $_SESSION["SHPCARTID_GuestUser"] = $_COOKIE["SHPCARTID_GuestUser"];
+}
 ?>
 
 <head>
@@ -55,7 +64,7 @@ session_start();
                         echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'> Ciao " . $_SESSION["USERNAME"] . "</a>
                                 <div class='dropdown-content'>
                                     <a href='userAccount.php' class='dropdown-item userDropdown'>My Account</a>
-                                    <a href='logout.php?' class='dropdown-item userDropdown'>Logout</a>
+                                    <a href='logout.php?msg=Logout' class='dropdown-item userDropdown'>Logout</a>
                                 </div>";
                     } else {
                         echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'>Account</a>
@@ -138,10 +147,10 @@ session_start();
                                 } else if (isset($_SESSION["WISHLISTID_GuestUser"])) {
                                     $sql = "SELECT COUNT(*) FROM includes JOIN wishlist
                                 ON includes.WishListID = wishlist.ID
-                                WHERE wishlist.Id = '" . $_SESSION["WISHLISTID_GuestUser"] . "'";
+                                WHERE wishlist.ID = '" . $_SESSION["WISHLISTID_GuestUser"] . "'";
 
                                     $result = $conn->query($query);
-
+                                    mysqli_error($conn);
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else
@@ -151,7 +160,6 @@ session_start();
                             </a>
                         </div>
                         <!-- /Wishlist -->
-
                         <!-- Cart -->
                         <div>
                             <a href="shpCart.php">
@@ -160,21 +168,17 @@ session_start();
                                 <!-- <div class="qty">3</div> -->
                                 <?php
                                 if (isset($_SESSION["CARTID_"])) {
-                                    $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
-                                ON contains.CartID = shopping_carts.ID
-                                WHERE shopping_carts.ID = '" . $_SESSION["CARTID_"] . "'";
+                                    $query = "SELECT COUNT(*) FROM contains WHERE CartID = " . $_SESSION["CARTID_"];
 
                                     $result = $conn->query($query);
 
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else if (isset($_SESSION["CARTID_GuestUser"])) {
-                                    $query = "SELECT COUNT(*) FROM contains JOIN shopping_carts
-                                ON contains.CartID = shopping_carts.ID
-                                WHERE shopping_carts.ID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+                                    $query = "SELECT COUNT(*) FROM contains WHERE CartID = " . $_SESSION["CARTID_GuestUser"];
 
                                     $result = $conn->query($query);
-
+                                    mysqli_error($conn);
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else
@@ -185,14 +189,6 @@ session_start();
                         </div>
                         <!-- /Cart -->
 
-                        <!-- Menu Toogle -->
-                        <div class="menu-toggle">
-                            <a href="#">
-                                <i class="fa fa-bars"></i>
-                                <span>Menu</span>
-                            </a>
-                        </div>
-                        <!-- /Menu Toogle -->
                     </div>
                 </div>
                 <!-- /ACCOUNT -->
@@ -213,27 +209,26 @@ session_start();
             <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
                 <?php
-                if(!isset($_GET["category"]) || $_GET["category"]==0 )
+                if (!isset($_GET["category"]) || $_GET["category"] == 0)
                     echo "<li class='active'>";
-                else 
+                else
                     echo "<li>";
 
                 echo "<a href='index.php'>Home</a></li>";
-                
+
                 $query = "SELECT Type FROM categories";
                 $result = $conn->query($query);
 
                 //controllo
                 if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()){
-                        if(isset($_GET["category"]) && $_GET["category"]!=0){
-                            if($row["Type"] == $_GET["category"])
+                    while ($row = $result->fetch_assoc()) {
+                        if (isset($_GET["category"]) && $_GET["category"] != 0) {
+                            if ($row["Type"] == $_GET["category"])
                                 echo "<li class='active'>";
-                        }
-                        else 
-                                echo "<li>";
+                        } else
+                            echo "<li>";
                         echo "<a href='index.php?category=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
-                    }        
+                    }
                 }
                 ?>
 

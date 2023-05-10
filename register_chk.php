@@ -50,6 +50,8 @@ if (strcmp($password, $confirmPwd) != 0) {
     $query->bind_param('ssssssi', $firstName, $lastName, $email, $password, $birthDate,  $phoneNumber, $seller);
     if ($query->execute() === true) {
         //se creato correttamente l'utente creo un suo carrello tramite l'id
+        $_SESSION['USERNAME'] = $row['FirstName'];
+        $_SESSION['USERNAME'] = $row["ID"];
         $sql = "SELECT ID FROM users WHERE Email = '$email'";
         $result = $conn->query($query);
         $row = $result->fetch_assoc();

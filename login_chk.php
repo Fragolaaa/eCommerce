@@ -15,7 +15,8 @@ if ($result->num_rows > 0) {
   //save session
   $_SESSION['ID'] = $row['ID'];
   $_SESSION['USERNAME'] = $row['FirstName'];
-
+  $_SESSION['USERNAME'] = $row["ID"];
+  
   //last user's cart
   $sql = $conn->prepare("SELECT ID FROM shopping_cart WHERE UserID = ?");
   $sql->bind_param('i', $_SESSION['ID']);
