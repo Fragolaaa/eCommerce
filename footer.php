@@ -28,7 +28,7 @@
                             //controllo
                             if ($result->num_rows > 0) {
                                 while ($row = $result->fetch_assoc())
-                                    echo "<li><a href='products.php?filter=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                                    echo "<li><a href='index.php?category=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
                             }
                             ?>
 

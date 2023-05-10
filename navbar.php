@@ -52,7 +52,7 @@ session_start();
                 <div class="dropdown">
                     <?php
                     if (isset($_SESSION["USERNAME"])) {
-                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'>" . $_SESSION["USERNAME"] . "</a>
+                        echo "<a href='#' class='nav-link dropdown-toggle' data-toggle='dropdown' style='color:white'> Ciao " . $_SESSION["USERNAME"] . "</a>
                                 <div class='dropdown-content'>
                                     <a href='userAccount.php' class='dropdown-item userDropdown'>My Account</a>
                                     <a href='logout.php?' class='dropdown-item userDropdown'>Logout</a>
@@ -93,7 +93,7 @@ session_start();
                 <div class="col-md-6">
                     <div class="header-search">
                         <form href="products.php" method="get">
-                            <select class="input-select">
+                            <select name="category" class="input-select">
                                 <option value="0">All Categories</option>
                                 <?php
                                 $query = "SELECT Type FROM categories";
@@ -102,7 +102,7 @@ session_start();
                                 //controllo
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc())
-                                        echo "<option value=" . $row['ID'] . ">" . $row['Type'] . "</option>";
+                                        echo "<option value=" . $row['Type'] . ">" . $row['Type'] . "</option>";
                                 }
                                 ?>
 
@@ -212,15 +212,28 @@ session_start();
         <div id="responsive-nav">
             <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="index.php">Home</a></li>
                 <?php
+                if(!isset($_GET["category"]) || $_GET["category"]==0 )
+                    echo "<li class='active'>";
+                else 
+                    echo "<li>";
+
+                echo "<a href='index.php'>Home</a></li>";
+                
                 $query = "SELECT Type FROM categories";
                 $result = $conn->query($query);
 
                 //controllo
                 if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc())
-                        echo "<li><a href='products.php?filter=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                    while ($row = $result->fetch_assoc()){
+                        if(isset($_GET["category"]) && $_GET["category"]!=0){
+                            if($row["Type"] == $_GET["category"])
+                                echo "<li class='active'>";
+                        }
+                        else 
+                                echo "<li>";
+                        echo "<a href='index.php?category=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                    }        
                 }
                 ?>
 

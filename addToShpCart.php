@@ -47,12 +47,12 @@ if (isset($CartID) && isset($ProdID) && $_GET["q"] != null && $_GET["q"] != 0) {
                 $sql = $conn->prepare("UPDATE contains SET Amount = ? WHERE CartID = ? AND ArticleID = ?");
                 $sql->bind_param("iii", $newQuantity, $CartID, $ProdID);
                 $sql->execute();
-                header("location:products.php?msg=Added to cart successfully!&type=success");
+                header("location:index.php?msg=Added to cart successfully!&type=success");
             } else {
-                header("location:products.php?msg=Insufficient amount of pieces of the product!&type=danger");
+                header("location:index.php?msg=Insufficient amount of pieces of the product!&type=danger");
             }
         } else
-            header("location:..\products.php?msg=Product doesn't exist!&type=danger");
+            header("location:index.php?msg=Product doesn't exist!&type=danger");
     } else {
         $sql = $conn->prepare("SELECT Quantity FROM products WHERE ID = ?");
         $sql->bind_param('i', $ProdID);
@@ -65,13 +65,13 @@ if (isset($CartID) && isset($ProdID) && $_GET["q"] != null && $_GET["q"] != 0) {
                 $sql = $conn->prepare("INSERT INTO contains (CartID, ArticleID, Amount) VALUES (?,?,?)");
                 $sql->bind_param('iii', $CartID, $ProdID, $_GET['q']);
                 $sql->execute();
-                header("location:products.php?msg=Added to cart successfully!&type=success");
+                header("location:index.php?msg=Added to cart successfully!&type=success");
             } else {
-                header("location:products.php?msg=Insufficient amount of pieces of the product!&type=danger");
+                header("location:index.php?msg=Insufficient amount of pieces of the product!&type=danger");
             }
         } else
-            header("location:products.php?msg=Product doesn't exist!&type=danger");
+            header("location:index.php?msg=Product doesn't exist!&type=danger");
     }
 } else
-    header("location:products.php?msg=Product sold out!&type=danger");
+    header("location:index.php?msg=Product sold out!&type=danger");
 ?>

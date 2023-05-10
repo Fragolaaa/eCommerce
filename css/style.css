@@ -871,7 +871,7 @@ textarea.input {
 }
 
 .product .product-img>img {
-  width: 100%;
+  width: 7%;
 }
 
 .product .product-img .product-label {
@@ -2234,4 +2234,3 @@ textarea.input {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #a01a1a;}
-
