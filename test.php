@@ -1,28 +1,15 @@
 <?php
 include("database/connection.php");
 session_start();
-//check password
 
-if (strlen($_POST["password"]) < 8) {
-    header("location:register_page.php&Password too short!");
-}
-
-if (!preg_match("#[0-9]+#", $_POST["password"])) {
-    header("location:register_page.php&Password must include at least one number!");
-}
-
-if (!preg_match("#[a-zA-Z]+#", $_POST["password"])) {
-    header("location:register_page.php&Password must include at least one letter!");
-}
-
-$password = md5($_POST["password"]);
-$confirmPwd = md5($_POST["confirmPwd"]);
+$password = md5("ciao");
+$confirmPwd = md5("ciao");
 
 if (strcmp($password, $confirmPwd) != 0) {
-    // echo $password;
-    // echo $confirmPwd;
-   header("location:register_page.php?msg=Oh no! Something went wrong, passwords do not match!&type=danger");
+    echo $password;
+    echo $confirmPwd;
 } else {
+    echo "sto querando";
     $firstName = $_POST["FirstName"];
     $lastName = $_POST["LastName"];
     $birthDate = $_POST["birthDate"];
@@ -47,7 +34,7 @@ if (strcmp($password, $confirmPwd) != 0) {
 
     //nuovo utente
     $query = $conn->prepare("INSERT INTO users (FirstName, LastName, Email, Password, BirthDate, PhoneNumber, Seller) VALUES (?,?,?,?,?,?,?)");
-    $query->bind_param('ssssssi', $firstName, $lastName, $email, $password, $birthDate,  $phoneNumber, $seller);
+    $query->bind_param('ssssssi', $firstName, $lastName, $birthDate, $email, $phoneNumber, $password, $seller);
     if ($query->execute() === true) {
         //se creato correttamente l'utente creo un suo carrello tramite l'id
         $sql = "SELECT ID FROM users WHERE Email = '$email'";
@@ -62,11 +49,10 @@ if (strcmp($password, $confirmPwd) != 0) {
         $query = $conn->prepare("INSERT INTO wishlist (UserID) VALUES (?)");
         $query->bind_param('i', $id);
         $query->execute();
-        header("location:index.php?msg=registration successfull&type=success");
     } else {
-        print_r(mysqli_error($conn));
+        print_r("Error: " . $query . "<br>" . mysqli_error($conn));
     }
-    
+    header("location:index.php?msg=registration successfull&type=success");
 }
 
 

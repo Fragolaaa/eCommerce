@@ -1,6 +1,5 @@
 <?php
 include("database/connection.php");
-// include("chkSession.php");
 session_start();
 ?>
 
