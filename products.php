@@ -25,7 +25,7 @@ if ($result->num_rows > 0) {
             $r = 1;
         }
 
-        echo "<div class='col-md-4'>
+        echo "<div class='col-md-4'><a href='productDetail.php?ID=" . $row['ID'] . "'>
                                             <div class='product'>
                                                 <div class='product-img'>
                                                 <img src='./imgs/product-" . $row['ID'] . ".jpg' alt=''>
@@ -35,7 +35,7 @@ if ($result->num_rows > 0) {
         echo "</div></div>
                                                 <div class='product-body'>
 											<p class='product-category'>" . $row["Type"] . "</p>
-											<h3 class='product-name'><a href='productDetail.php?id=" . $row['ID'] . "'>" . $row['Title'] . "</a></h3>";
+											<h3 class='product-name'><a href='productDetail.php?ID=" . $row['ID'] . "'>" . $row['Title'] . "</a></h3>";
         if ($row["Discount"] != 0) {
             echo "<h4 class='product-price'>" . $discountedPrice . "$<del class='product-old-price'>" . $row["Price"] . "$</del></h4>";
         } else {
@@ -49,14 +49,14 @@ if ($result->num_rows > 0) {
 												<i class='fa fa-star'></i>
 											</div>
                                             <div class='product-btns'>
-												<button onClick='location.href=\"addToWishList.php?id=" . $row["ID"] . " \"' class='add-to-wishlist'><i class='fa fa-heart-o'></i><span
+												<button onClick='location.href=\"addToWishList.php?ID=" . $row["ID"] . "&q=1 \"' class='add-to-wishlist'><i class='fa fa-heart-o'></i><span
 														class='tooltipp'>add to wishlist</span></button>
-												<button onClick='location.href=\"productDetail.php?id=" . $row["ID"] . " \"' class='quick-view'><i class='fa fa-eye'></i><span
+												<button onClick='location.href=\"productDetail.php?ID=" . $row["ID"] . " \"' class='quick-view'><i class='fa fa-eye'></i><span
 														class='tooltipp'>quick view</span></button>
 											</div>
 										</div>
 										<div class='add-to-cart'>
-											<button onClick='location.href=\"addToShpCart.php?id=" . $row["ID"] . "\"' class='add-to-cart-btn'><i class='fa fa-shopping-cart'></i> add to
+											<button onClick='location.href=\"addToShpCart.php?ID=" . $row["ID"] . "&q=1\"' class='add-to-cart-btn'><i class='fa fa-shopping-cart'></i> add to
 												cart</button>
 										</div>
                                         </div> </div>";

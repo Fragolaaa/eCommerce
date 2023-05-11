@@ -63,7 +63,7 @@ session_start();
                                     $sql = "";
                                     if (isset($_SESSION["CARTID_"]))
                                         $sql = "SELECT products.ID, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
-                                    else if (isset($_SESSION["IDCartGuest"]))
+                                    else if (isset($_SESSION["CARTID_GuestUser"]))
                                         $sql = "SELECT products.Id, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
                                     if ($sql != "") {
                                         $result = $conn->query($sql);
@@ -74,8 +74,8 @@ session_start();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>
                                                     <td>
-                                                        <div class='img pl-2'>
-                                                            <a href='productDetail.php?id=" . $row["ID"] . "'><img src='img/product-" . $row["ID"] . ".jpg' alt='Image'></a>
+                                                         <div class='img pl-2'>
+                                                            <a href='productDetail.php?id=" . $row["ID"] . "'><img src='img/product-" . $row["ID"] . ".jpg' alt='Image' style='width:7%'></a>
                                                             <p>" . $row["Title"] . "</p>
                                                         </div>
                                                     </td>
@@ -83,9 +83,9 @@ session_start();
                                                     <td>" . $row["Discount"] . "%</td>
                                                     <td>
                                                         <div class='qty'>
-                                                            <button class='btn-minus' onclick='toUpdateQuantityCart(" . $row["ID"] . "," . ($row["Quantity"] - 1) . ", " . $row["Amount"] . ")'><i class='fa fa-minus'></i></button>
-                                                            <input class='pb-1' type='text' name='q' value='" . $row["Quantity"] . "' min=1 max=" . $row["Amount"] . "'>
-                                                            <button class='btn-plus' onclick='toUpdateQuantityCart(" . $row["ID"] . "," . ($row["Quantity"] + 1) . ", " . $row["Amount"] . ")'><i class='fa fa-plus'></i></button>
+                                                            <button class='btn-minus' onclick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-minus'></i></button>
+                                                            <input class='pb-1' type='text' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Amount"] . "'>
+                                                            <button class='btn-plus' onclick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-plus'></i></button>
                                                         </div>
                                                     </td>";
 

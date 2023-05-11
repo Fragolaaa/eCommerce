@@ -15,7 +15,6 @@ if ($result->num_rows > 0) {
   //save session
   $_SESSION['ID'] = $row['ID'];
   $_SESSION['USERNAME'] = $row['FirstName'];
-  $_SESSION['USERNAME'] = $row["ID"];
   
   //last user's cart
   $sql = $conn->prepare("SELECT ID FROM shopping_cart WHERE UserID = ?");
@@ -23,7 +22,7 @@ if ($result->num_rows > 0) {
   $sql->execute();
   $result = $sql->get_result();
   $row = $result->fetch_assoc();
-  $_SESSION['CartID'] = $row['MAX(ID)'];
+  $_SESSION['CARTID_'] = $row['MAX(ID)'];
 
   //select user's wishlist
   $sql = $conn->prepare("SELECT ID FROM wishlist WHERE UserID = ?");
@@ -31,7 +30,7 @@ if ($result->num_rows > 0) {
   $sql->execute();
   $result = $sql->get_result();
   $row = $result->fetch_assoc();
-  $_SESSION['WishListID'] = $row['ID'];
+  $_SESSION['WISHLISTID_'] = $row['ID'];
 
   header("location:index.php?msg=Logged in&type=success");
 } else {

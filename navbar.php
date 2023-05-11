@@ -134,23 +134,17 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
                                 <!-- <div class="qty">2</div> -->
                                 <?php
                                 if (isset($_SESSION["WISHLISTID_"])) {
-
-                                    $query = "SELECT COUNT(*) FROM includes JOIN wishlist
-                                ON includes.WishListID = wishlist.ID
-                                WHERE wishlist.ID = '" . $_SESSION["WISHLISTID_"] . "'";
+                                    $query = "SELECT COUNT(*) FROM includes WHERE WishListID = " . $_SESSION["WISHLISTID_"];
 
                                     $result = $conn->query($query);
-
 
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else if (isset($_SESSION["WISHLISTID_GuestUser"])) {
-                                    $sql = "SELECT COUNT(*) FROM includes JOIN wishlist
-                                ON includes.WishListID = wishlist.ID
-                                WHERE wishlist.ID = '" . $_SESSION["WISHLISTID_GuestUser"] . "'";
+                                    $query = "SELECT COUNT(*) FROM includes WHERE WishListID = " . $_SESSION["WISHLISTID_GuestUser"];
 
                                     $result = $conn->query($query);
-                                    mysqli_error($conn);
+                                    
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else
@@ -178,7 +172,7 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
                                     $query = "SELECT COUNT(*) FROM contains WHERE CartID = " . $_SESSION["CARTID_GuestUser"];
 
                                     $result = $conn->query($query);
-                                    mysqli_error($conn);
+                                    
                                     $row = $result->fetch_assoc();
                                     $n = $row["COUNT(*)"];
                                 } else
