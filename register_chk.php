@@ -55,14 +55,14 @@ if (strcmp($password, $confirmPwd) != 0) {
         $sql = "SELECT ID FROM users WHERE Email = '$email'";
         $result = $conn->query($query);
         $row = $result->fetch_assoc();
-        $id = $row["ID"];
+        $ID = $row["ID"];
 
         $query = $conn->prepare("INSERT INTO shopping_cart (UserID) VALUES (?)");
-        $query->bind_param('i', $id);
+        $query->bind_param('i', $ID);
         $query->execute();
 
         $query = $conn->prepare("INSERT INTO wishlist (UserID) VALUES (?)");
-        $query->bind_param('i', $id);
+        $query->bind_param('i', $ID);
         $query->execute();
         header("location:index.php?msg=registration successfull&type=success");
     } else {

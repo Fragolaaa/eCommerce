@@ -1,46 +1,49 @@
-<?php 
+<?php
 include "navbar.php";
-session_start(); 
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Shopping Cart</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
- 		<!-- Google font -->
- 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <title>Shopping Cart</title>
 
- 		<!-- Bootstrap -->
- 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
- 		<!-- Slick -->
- 		<link type="text/css" rel="stylesheet" href="css/slick.css"/>
- 		<link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+    <!-- Bootstrap -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 
- 		<!-- nouislider -->
- 		<link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
+    <!-- Slick -->
+    <link type="text/css" rel="stylesheet" href="css/slick.css" />
+    <link type="text/css" rel="stylesheet" href="css/slick-theme.css" />
 
- 		<!-- Font Awesome Icon -->
- 		<link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- nouislider -->
+    <link type="text/css" rel="stylesheet" href="css/nouislider.min.css" />
 
- 		<!-- Custom stlylesheet -->
- 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="css/font-awesome.min.css">
 
- 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
- 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
- 		<!--[if lt IE 9]>
- 		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
- 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
- 		<![endif]-->
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
 
-    </head>
-	<body>
-	<div class="cart-page">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+         <![endif]-->
+
+</head>
+
+<body>
+
+    <div class="cart-page">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8">
@@ -62,9 +65,9 @@ session_start();
                                     <?php
                                     $sql = "";
                                     if (isset($_SESSION["CARTID_"]))
-                                        $sql = "SELECT products.ID, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
+                                        $sql = "SELECT ID, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
                                     else if (isset($_SESSION["CARTID_GuestUser"]))
-                                        $sql = "SELECT products.Id, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+                                        $sql = "SELECT ID, Title, Price, Discount, Quantity, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
                                     if ($sql != "") {
                                         $result = $conn->query($sql);
 
@@ -83,9 +86,9 @@ session_start();
                                                     <td>" . $row["Discount"] . "%</td>
                                                     <td>
                                                         <div class='qty'>
-                                                            <button class='btn-minus' onclick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-minus'></i></button>
+                                                            <button class='btn-minus' onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-minus'></i></button>
                                                             <input class='pb-1' type='text' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Amount"] . "'>
-                                                            <button class='btn-plus' onclick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-plus'></i></button>
+                                                            <button class='btn-plus' onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-plus'></i></button>
                                                         </div>
                                                     </td>";
 
@@ -94,7 +97,7 @@ session_start();
                                                 else
                                                     echo "<td>$" . $row["Price"] * $row["Quantity"] . "</td>";
 
-                                                echo "<td><button onclick='RemoveFrom_Cart(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td></tr>";
+                                                echo "<td><button onClick='RemoveFrom_Cart(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td></tr>";
                                             }
                                         } else {
                                             echo "<tr><td>No products here :(</td><td></td><td></td><td></td><td></td><td></td></tr>";
@@ -140,18 +143,18 @@ session_start();
                                               <h2>Grand Total <span>$" . ($totPrice + 4.99) . "</span></h2>";
                                         ?>
                                     </div>
-        
-                                        <div class="cart-btn">
-                                            <?php
-                                            if (isset($_SESSION["CARTID_"]) || isset($_SESSION["CARTID_GuestUser"]))
-                                                echo '  <button onclick="CleanCart()">Clear All</button>
-                                                        <button onclick="Checkout()">Checkout</button>';
-                                            else
-                                                echo '  <button onclick="CleanCart()" disabled>Clear All</button>
+
+                                    <div class="cart-btn">
+                                        <?php
+                                        if (isset($_SESSION["CARTID_"]) || isset($_SESSION["CARTID_GuestUser"]))
+                                            echo '  <button onClick="CleanCart()">Clear All</button>
+                                                        <button onClick="Checkout()">Checkout</button>';
+                                        else
+                                            echo '  <button onclick="CleanCart()" disabled>Clear All</button>
                                                         <button onclick="Checkout()" disabled>Checkout</button>';
-                                            ?>
-                                        </div>
-                                
+                                        ?>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -161,16 +164,18 @@ session_start();
         </div>
     </div>
     <!-- Cart End -->
-		<?php include "footer.php" ?>
-		<!-- /FOOTER -->
+    <?php include "footer.php" ?>
+    <!-- /FOOTER -->
 
-		<!-- jQuery Plugins -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/slick.min.js"></script>
-		<script src="js/nouislider.min.js"></script>
-		<script src="js/jquery.zoom.min.js"></script>
-		<script src="js/main.js"></script>
+    <!-- jQuery Plugins -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/nouislider.min.js"></script>
+    <script src="js/jquery.zoom.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="javascript/redirScripts.js"></script>
 
-	</body>
+</body>
+
 </html>
