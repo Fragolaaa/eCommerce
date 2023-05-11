@@ -11,7 +11,8 @@ if (isset($_SESSION["CARTID_"])) {                       //logged user
     $CartID = $_SESSION["CARTID_GuestUser"];
 } else if (!isset($_SESSION["CARTID_GuestUser"])) {          //no guest user cart, not logged
     //creating guest user cart 
-    $sql = $conn->prepare("INSERT INTO shopping_cart () VALUES ()");
+    $sql = $conn->prepare("INSERT INTO shopping_cart (ID, UserID) VALUES (?,?)");
+    $sql->bind_param('ii', $CartID, $_SESSION["ID"]);
     $sql->execute();
 
     $CartID = $conn->insert_id;

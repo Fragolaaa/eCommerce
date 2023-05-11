@@ -17,7 +17,7 @@ if ($result->num_rows > 0) {
   $_SESSION['USERNAME'] = $row['FirstName'];
   
   //last user's cart
-  $sql = $conn->prepare("SELECT ID FROM shopping_cart WHERE UserID = ?");
+  $sql = $conn->prepare("SELECT MAX(ID) FROM shopping_cart WHERE UserID = ?");
   $sql->bind_param('i', $_SESSION['ID']);
   $sql->execute();
   $result = $sql->get_result();

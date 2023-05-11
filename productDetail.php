@@ -131,7 +131,6 @@ session_start();
 						}
 
 						echo "</form>
-					?>
 					</div>
 				</div>
 			</div>

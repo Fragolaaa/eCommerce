@@ -74,8 +74,8 @@ session_start();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr>
                                                     <td>
-                                                         <div class='img pl-2'>
-                                                            <a href='productDetail.php?id=" . $row["ID"] . "'><img src='img/product-" . $row["ID"] . ".jpg' alt='Image' style='width:7%'></a>
+                                                         <div class='img pl2'>
+                                                            <a href='productDetail.php?ID=" . $row["ID"] . "'><img src='imgs/product-" . $row["ID"] . ".jpg' alt='Image' style='width:15%'></a>
                                                             <p>" . $row["Title"] . "</p>
                                                         </div>
                                                     </td>
@@ -90,7 +90,7 @@ session_start();
                                                     </td>";
 
                                                 if ($row["Discount"] != 0)
-                                                    echo "<td><s>$" . $row["Price"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Quantity"] . "</td>";
+                                                    echo "<td><s>$" . $row["Price"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Amount"] . "</td>";
                                                 else
                                                     echo "<td>$" . $row["Price"] * $row["Quantity"] . "</td>";
 
@@ -119,9 +119,9 @@ session_start();
                                         $sql = "";
                                         $totPrice = 0;
                                         if (isset($_SESSION["CARTID_"]))
-                                            $sql = "SELECT Price, Discount, Quantity FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
+                                            $sql = "SELECT Price, Discount, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_"] . "'";
                                         else if (isset($_SESSION["CARTID_GuestUser"]))
-                                            $sql = "SELECT Price, Discount, Quantity FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
+                                            $sql = "SELECT Price, Discount, Amount FROM contains JOIN products ON contains.ArticleID = products.ID WHERE CartID = '" . $_SESSION["CARTID_GuestUser"] . "'";
                                         if ($sql != "") {
                                             $result = $conn->query($sql);
 
@@ -129,9 +129,9 @@ session_start();
                                             if ($result->num_rows > 0) {
                                                 while ($row = $result->fetch_assoc()) {
                                                     if ($row["Discount"] != 0)
-                                                        $totPrice += round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Quantity"];
+                                                        $totPrice += round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Amount"];
                                                     else
-                                                        $totPrice += $row["Price"] * $row["Quantity"];
+                                                        $totPrice += $row["Price"] * $row["Amount"];
                                                 }
                                             }
                                         }

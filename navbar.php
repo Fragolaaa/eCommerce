@@ -103,7 +103,7 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
                     <div class="header-search">
                         <form href="products.php" method="get">
                             <select name="category" class="input-select">
-                                <option value="0">All Categories</option>
+                                <option value="">All Categories</option>
                                 <?php
                                 $query = "SELECT Type FROM categories";
                                 $result = $conn->query($query);
@@ -116,7 +116,7 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
                                 ?>
 
                             </select>
-                            <input class="input" placeholder="Search here">
+                            <input name="filter" class="input" placeholder="Search here">
                             <button class="search-btn">Search</button>
                         </form>
                     </div>

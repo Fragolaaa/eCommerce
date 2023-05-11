@@ -11,7 +11,8 @@ if (isset($_SESSION["WISHLISTID_"])) {                //logged
     $WishListID = $_SESSION["WISHLISTID_GuestUser"];
 } else if (!isset($_SESSION["WISHLISTID_GuestUser"])) {      //no guest wishlist w cookie, not logged
     
-    $sql = $conn->prepare("INSERT INTO wishlist() VALUES ()");
+    $sql = $conn->prepare("INSERT INTO wishlist (ID, UserID) VALUES (?,?)");
+    $sql->bind_param('ii', $WishListID, $_SESSION["ID"]);
     $sql->execute();
 
     $WishListID = $conn->insert_id;
@@ -35,13 +36,13 @@ if (isset($WishListID) && isset($ArticleID)) {
         $sql = $conn->prepare("DELETE FROM includes WHERE WishListID = ? AND ArticleID = ?");
         $sql->bind_param('ii', $WishListID, $ArticleID);
         $sql->execute();
-        header("location:products.php?msg=Product removed from wishlist&type=danger");
+        header("location:index.php?msg=Product removed from wishlist&type=danger");
     } else {
         //add product into wishlist
         $sql = $conn->prepare("INSERT INTO includes (WishListID, ArticleID) VALUES (?,?)");
         $sql->bind_param('ii', $WishListID, $ArticleID);
         $sql->execute();
-        header("location:products.php?msg=Product added to wishlist&type=success");
+        header("location:index.php?msg=Product added to wishlist&type=success");
     }
 } else
     header("location:products.php?msg=Product doesn't exist!&type=danger");

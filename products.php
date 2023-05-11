@@ -1,28 +1,35 @@
 <?php
 include("database/connection.php");
 //FILTRI
-$sql = "SELECT products.Title, products.ID, products.Price, products.Discount, products.Quantity FROM products ";
+$sql = "SELECT products.Title, products.ID, Price, Discount, Quantity FROM products ";
+
+if (isset($_GET["category"])) {
+    if($_GET["category"]!="")
+        $sql .= " JOIN categories ON products.CategoryID = categories.ID WHERE Type = '" . $_GET["category"] . "' AND ";
+    else 
+        $sql .= " JOIN categories ON products.CategoryID = categories.ID WHERE ";
+}
 
 if (isset($_GET["filter"])) {
-    $sql .= "WHERE Title LIKE '%" . $_GET["filter"] . "%'";
-} else if (isset($_GET["category"])) {
-    $category = $_GET["category"];
-    $sql .= " JOIN categories ON products.CategoryID = categories.ID WHERE Type = '" . $category;
-} else {
-    $sql .= " JOIN categories ON products.CategoryID = categories.ID";
-}
+    if($_GET["filter"]=="")
+        $sql .= "1";
+    else
+        $sql .= "Title LIKE '%" . $_GET["filter"] . "%'";
+} 
+
 
 $result = $conn->query($sql);
 $r = 1;
-mysqli_error($conn);
+echo "<div class='row'>";
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         if ($row["Discount"] != 0)
             $discountedPrice = round($row["Price"] * (100 - $row["Discount"]) / 100, 2);
 
         if ($r == 3) {
-            echo "</div><div class='row'>";
             $r = 1;
+            echo "<div class='row'>";
         }
 
         echo "<div class='col-md-4'><a href='productDetail.php?ID=" . $row['ID'] . "'>
@@ -49,7 +56,7 @@ if ($result->num_rows > 0) {
 												<i class='fa fa-star'></i>
 											</div>
                                             <div class='product-btns'>
-												<button onClick='location.href=\"addToWishList.php?ID=" . $row["ID"] . "&q=1 \"' class='add-to-wishlist'><i class='fa fa-heart-o'></i><span
+												<button onClick='location.href=\"addToWishList.php?ID=" . $row["ID"] . "\"' class='add-to-wishlist'><i class='fa fa-heart-o'></i><span
 														class='tooltipp'>add to wishlist</span></button>
 												<button onClick='location.href=\"productDetail.php?ID=" . $row["ID"] . " \"' class='quick-view'><i class='fa fa-eye'></i><span
 														class='tooltipp'>quick view</span></button>
