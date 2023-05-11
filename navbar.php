@@ -200,7 +200,6 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
     <div class="container">
         <!-- responsive-nav -->
         <div id="responsive-nav">
-            <!-- NAV DA SISTEMARE!!! -->
             <ul class="main-nav nav navbar-nav">
                 <?php
                 if (!isset($_GET["category"]) || $_GET["category"] == 0)
@@ -221,12 +220,11 @@ if (isset($_COOKIE["SHPCARTID_GuestUser"])) {
                                 echo "<li class='active'>";
                         } else
                             echo "<li>";
-                        echo "<a href='index.php?category=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
+                        echo "<a href='index.php?filter=&category=" . $row['Type'] . "'>" . $row['Type'] . "</a></li>";
                     }
                 }
                 ?>
 
-            </ul>
             </ul>
             <!-- /NAV -->
         </div>

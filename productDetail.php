@@ -50,7 +50,7 @@ session_start();
 			<!-- row -->
 			<div class="row">
 				<!-- Product main img -->
-				<div class="col-md-5 col-md-push-1">
+				<div class="col-md-6">
 					<div id="product-main-img">
 						<?php
 						echo "<img src='imgs/product-" . $_GET["ID"] . ".jpg' alt='Product Image' style='object-fit: contain'>";
@@ -58,14 +58,14 @@ session_start();
 					</div>
 				</div>
 				<!-- /Product main img -->
-				<div class="col-md-6 col-md-push-3">
+				<div class="col-md-6">
 					<div class="product-content">
 						<?php
 						$sql = "SELECT products.ID, products.Title, Price, Discount, AVG(Stars), Quantity, Description FROM products JOIN reviews ON products.ID = reviews.ArticleID WHERE products.ID = '" . $_GET["ID"] . "' GROUP BY products.ID";
 						$result = $conn->query($sql);
 						if ($result->num_rows > 0) {
 							$row = $result->fetch_assoc();
-							echo "<form method='get' action='addToShpCart.php&ID=".$row['products.ID']."q=1'>
+							echo "<form method='get' action='addToShpCart.php&ID=" . $row['products.ID'] . "q=1'>
 										<div class='product-details'>
 										<h2 class='product-name'>" . $row["Title"] . "</h2>
                                             </div>
@@ -76,65 +76,65 @@ session_start();
 							for ($i = $row["AVG(Stars)"]; $i < 5; $i++) {
 								echo "<i class='far fa-star'></i>";
 							}
+							echo "</div>";
 							//echo "<a class='review-link' href='#'>10 Review(s) | Add your review</a>";
 						} else {
 							$sql = "SELECT products.ID, products.Title, Price, Discount, Quantity, Description FROM products WHERE products.ID = '" . $_GET["ID"] . "'";
 							$result = $conn->query($sql);
 							if ($result->num_rows > 0) {
 								$row = $result->fetch_assoc();
-								echo "<form method='get' action='addToShpCart.php&ID=".$row['products.ID']."q=1'>
+								echo "<form method='get' action='addToShpCart.php&ID=" . $row['products.ID'] . "q=1'>
 											<div class='product-details'>
-											<h2 class='product-name'>" . $row["Title"] . "</h2>
+											<h1 class='product-name'>" . $row["Title"] . "</h1>
 												</div>
 												<div class='product-rating'>";
 								for ($i = 0; $i < 5; $i++) {
 									echo "<i class='far fa-star'></i>";
 								}
 							}
+							echo "</div>";
 						}
-						echo "</div> <div>";
+
 						if ($row["Discount"] != 0)
-							echo "<h3 class='product-price'>" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) . "<del class='product-old-price'>" . $row["Price"] . "</del></h3>";
+							echo "<h3 class='product-price'>" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) . "$ <del class='product-old-price'>" . $row["Price"] . "$</del></h3>";
 						else
 							echo "<h3 class='product-price'>" . $row["Price"] . "$</h3>";
 						echo "  </div>
-                                            <div class='quantity'>
+                    
                                                 <h4>Quantity:</h4>
                                                 <div class='qty'>";
 						if ($row["Quantity"] >= 1) {
-							echo "<span class='product-available'>In Stock</span></div>";
-							echo "<p>" . $row["Description"] . "</p>";
+							echo "<span class='product-available'>" . $row["Quantity"] . " In Stock</span></div>";
+							echo "<div class'description'><h4 class='product-price'> Description: </h4>";
+							echo "<p>" . $row["Description"] . "</p></div>";
 
 							echo " <div class='add-to-cart'>
 											<div class='qty-label'>
-												Qty
 												<div class='input-number' value='1' min=1 max=" . $row["Quantity"] . ">
-												<input type='hidden' name='id' value='" . $row["ID"] . "'>
-													<input type='number'>
-													<span class='qty-up'>+</span>
-													<span class='qty-down'>-</span>
-												</div>
+												<input type='hidden' name='ID' value='" . $row["ID"] . "'>
+													<input type='number' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Amount"] . "' style='width:30%'/>
+													<span onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")' class='qty-up'>+</span>
+													<span onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")' class='qty-down'>-</span>
+													</div>
 											</div>
-											<button onClick='\"location.href='addToShpCart.php'\" class='add-to-cart-btn'><i class='fa fa-shopping-cart'></i> add to cart</button>
-										</div>";
+											<input type='submit' class='add-to-cart-btn fa fa-shopping-cart' value='add to cart'>
+											<ul class='product-btns'>
+											<li><a href='addToWishList.php?ID=" . $row["ID"] . "'><i class='fa fa-heart-o'></i> add to wishlist</a></li></ul></div>";
 
 						} else {
 							echo "  <input type='number' name='q' value='0' min=0 max=0>
-                                                <input type='hidden' name='id' value='" . $row["ID"] . "'>
-                                                </div>
+                                                <input type='hidden' name='ID' value='" . $row["ID"] . "'>
                                                 </div>
                                                 <div class='action'>
                                                     <button class='btn soldout'><i class='fa fa-shopping-cart'></i>Sold Out</button>
                                                 </div>
 												<ul class='product-btns'>
-							<li><a href='addToWishList.php?ID=" . $row["ID"] . "'><i class='fa fa-heart-o'></i> add to wishlist</a></li></ul>";
+									<li><a href='addToWishList.php?ID=" . $row["ID"] . "'><i class='fa fa-heart-o'></i> add to wishlist</a></li></ul></div>";
 						}
 
 						echo "</form>
 					</div>
 				</div>
-			</div>
-		</div>
 
 	<!-- Product details -->
 
@@ -153,92 +153,85 @@ session_start();
 
 						$row = $result->fetch_assoc();
 						echo $row["COUNT(*)"];
-						?></a></li>
+
+						echo '</a></li>
 						</ul>
-						<!-- /product tab nav -->
-
-						<!-- product tab content -->
+					
 						<div class="tab-content">
-							<!-- tab1  -->
-
-							<!-- tab3  -->
-							<div id="tab3" class="tab-pane fade in">
 
 
 								<!-- Reviews -->
 								<div class="col-md-6">
 									<div id="reviews">
-										<ul class="reviews">
-											<?php
-											echo "<li><div id='reviews' class='review-heading'>";
-											$sql = "SELECT * FROM reviews JOIN users ON reviews.UserID = users.ID WHERE ArticleID = '" . $_GET["ID"] . "'";
-											$result = $conn->query($sql);
-											if ($result->num_rows > 0) {
-												while ($row = $result->fetch_assoc()) {
-													echo "<div class='reviews-submitted'>
+										<ul class="reviews">';
+
+						echo "<li><div id='reviews' class='review-heading'>";
+						$sql = "SELECT * FROM reviews JOIN users ON reviews.UserID = users.ID WHERE ArticleID = $prodID";
+						
+						$result = $conn->query($sql);
+						if ($result->num_rows > 0) {
+							while ($row = $result->fetch_assoc()) {
+								echo "<div class='reviews-submitted'>
                                             <div class='name'>" . $row["FirstName"] . " " . $row["LastName"] . " - <p class='date'>" . $row["Date"] . "</p></div>
                                                 <div class='review-rating'>";
-													for ($i = 0; $i < $row["Stars"]; $i++) {
-														echo "<i class='fa fa-star'></i>";
-													}
-													echo "</div><h5>" . $row["Title"] . "</h5><div class='review-body'><p>" . $row["Content"] . "</p></div></div>";
-												}
-											}
-											echo "</div></li>";
-											?>
-									</div>
-								</div>
-								<!-- /Reviews -->
-
-								<!-- Review Form -->
-
-
-								<div class="col-md-3">
-									<div id="review-form">
-										<form class="review-form">
-											<div class="rating">
-												<i class="far fa-star" name="1" id="1" onclick="setStars(1)"></i>
-												<i class="far fa-star" name="2" id="2" onclick="setStars(2)"></i>
-												<i class="far fa-star" name="3" id="3" onclick="setStars(3)"></i>
-												<i class="far fa-star" name="4" id="4" onclick="setStars(4)"></i>
-												<i class="far fa-star" name="5" id="5" onclick="setStars(5)"></i>
-											</div>
-											<form action="addReview.php" method="get">
-												<div class="row form">
-													<div class="col-sm-6">
-														<input type="title" name='title' placeholder="Title" required>
-													</div>
-													<div class="col-sm-3">
-														<?php
-														echo "<input type='hidden' name='id' value=" . $_GET['ID'] . ">";
-														?>
-													</div>
-													<div class="col-sm-3">
-														<?php
-														echo "<input type='hidden' name='stars' id='stars' value='0'>";
-														?>
-													</div>
-													<div class="col-sm-12">
-														<textarea placeholder="Review" name='text' required></textarea>
-													</div>
-													<div class="col-sm-12">
-														<button>Submit</button>
-													</div>
-													<button class="primary-btn">Submit</button>
-											</form>
-									</div>
-								</div>
-								<!-- /Review Form -->
-							</div>
-						</div>
-						<!-- /tab3  -->
+								for ($i = 0; $i < $row["Stars"]; $i++) {
+									echo "<i class='fa fa-star'></i>";
+								}
+								echo "</div><h5>" . $row["Title"] . "</h5><div class='review-body'><p>" . $row["Content"] . "</p></div></div>";
+							}
+						}
+						echo "</div></li>";
+						?>
 					</div>
-					<!-- /product tab content  -->
 				</div>
+				<!-- /Reviews -->
+
+				<!-- Review Form -->
+
+
+				<div class="col-md-3">
+					<div id="review-form">
+						<form class="review-form">
+							<div class="rating">
+								<i class="far fa-star" name="1" id="1" onclick="setStars(1)"></i>
+								<i class="far fa-star" name="2" id="2" onclick="setStars(2)"></i>
+								<i class="far fa-star" name="3" id="3" onclick="setStars(3)"></i>
+								<i class="far fa-star" name="4" id="4" onclick="setStars(4)"></i>
+								<i class="far fa-star" name="5" id="5" onclick="setStars(5)"></i>
+							</div>
+							<form action="addReview.php" method="get">
+								<div class="row form">
+									<div class="col-sm-6">
+										<input type="title" name='title' placeholder="Title" required>
+									</div>
+									<div class="col-sm-3">
+										<?php
+										echo "<input type='hidden' name='id' value=" . $_GET['ID'] . ">";
+										?>
+									</div>
+									<div class="col-sm-3">
+										<?php
+										echo "<input type='hidden' name='stars' id='stars' value='0'>";
+										?>
+									</div>
+									<div class="col-sm-12">
+										<textarea placeholder="Review" name='text' required></textarea>
+									</div>
+									<button class="primary-btn">Submit</button>
+							</form>
+					</div>
+				</div>
+				<!-- /Review Form -->
 			</div>
-			<!-- /product tab -->
 		</div>
-		<!-- /row -->
+		<!-- /tab3  -->
+	</div>
+	<!-- /product tab content  -->
+	</div>
+	</div>
+	<!-- /product tab -->
+	</div>
+	<!-- /row -->
 	</div>
 	<!-- /container -->
 	</div>
@@ -257,6 +250,8 @@ session_start();
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
+	<script type="text/javascript"></script>
+	<script src="javascript/stars.js"></script>
 
 </body>
 

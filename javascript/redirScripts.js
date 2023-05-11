@@ -7,7 +7,7 @@ function RemoveFrom_Cart(id) {
     window.location = "rmvFromCart.php?ID=" + id;
 }
 
-function Clean_Cart() {
+function CleanCart() {
     window.location = "cleanCart.php";
 }
 
@@ -15,11 +15,11 @@ function Checkout() {
     window.location = "checkoutPage.php";
 }
 function AddTo_Cart(id, q) {
-    window.location = "addToShpCart.php?id=" + id + "&q=" + q;
+    window.location = "addToShpCart.php?ID=" + id + "&q=" + q;
 }
 
 function RemoveFrom_Wishlist(id) {
-    window.location = "rmvFromWishList.php?id=" + id;
+    window.location = "rmvFromWishList.php?ID=" + id;
 }
 
 // function Delete_Product(id) {

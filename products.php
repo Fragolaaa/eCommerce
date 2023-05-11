@@ -66,9 +66,10 @@ if ($result->num_rows > 0) {
 											<button onClick='location.href=\"addToShpCart.php?ID=" . $row["ID"] . "&q=1\"' class='add-to-cart-btn'><i class='fa fa-shopping-cart'></i> add to
 												cart</button>
 										</div>
-                                        </div> </div>";
+                                        </div></div>";
         $r += $r;
 
     }
 }
+echo "</div>"
 ?>

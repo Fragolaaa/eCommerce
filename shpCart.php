@@ -174,6 +174,7 @@ session_start();
     <script src="js/nouislider.min.js"></script>
     <script src="js/jquery.zoom.min.js"></script>
     <script src="js/main.js"></script>
+    <script type="text/javascript"></script>
     <script src="javascript/redirScripts.js"></script>
 
 </body>

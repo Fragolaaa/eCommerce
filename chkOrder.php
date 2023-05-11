@@ -113,10 +113,9 @@ if ( isset($ShippingAddressID) && isset($PaymentMethodID) && isset($CartID)) {
     }
 
 
-    $sql = $conn->prepare("INSERT INTO orders (OrderDate, DeliveryDate, ShippingAddressID, PaymentMethodID, CartID) VALUES (?, ?, ?, ?, ?)");
-    $sql->bind_param('siiiii', $date, $DelDate, $ShippingAddressID, $PaymentMethodID, $CartID);
+    $sql = $conn->prepare("INSERT INTO orders (OrderDate, DeliveryDate, ShippingCost, ShippingAddressID, PaymentMethodID, CartID) VALUES (?, ?, ?, ?, ?,?)");
+    $sql->bind_param('ssfiii', $date, $DelDate, 4.99, $ShippingAddressID, $PaymentMethodID, $CartID);
     $sql->execute();
-
     if (isset($_SESSION["CARTID_"])) {
         $sql = $conn->prepare("INSERT INTO shopping_cart (UserID) VALUES (?)");
         $sql->bind_param('i', $_SESSION["ID"]);
