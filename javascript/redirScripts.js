@@ -1,5 +1,5 @@
 function UpdateQty_Cart(id, q, max) {
-    if (q != 0 && q != (max + 1))
+    if (q != 0 && (q<max+1))
         window.location = "updtQuantityCart.php?ID=" + id + "&q=" + q;
 }
 

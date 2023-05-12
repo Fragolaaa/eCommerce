@@ -42,6 +42,8 @@ session_start();
 </head>
 
 <body>
+	<script type="text/javascript"></script>
+	<script src="javascript/stars.js"></script>
 
 	<!-- SECTION -->
 	<div class="section">
@@ -65,7 +67,7 @@ session_start();
 						$result = $conn->query($sql);
 						if ($result->num_rows > 0) {
 							$row = $result->fetch_assoc();
-							echo "<form method='get' action='addToShpCart.php&ID=" . $row['products.ID'] . "q=1'>
+							echo "<form method='get' action='addToShpCart.php?ID=" . $row['products.ID'] . "&q=1'>
 										<div class='product-details'>
 										<h2 class='product-name'>" . $row["Title"] . "</h2>
                                             </div>
@@ -83,7 +85,7 @@ session_start();
 							$result = $conn->query($sql);
 							if ($result->num_rows > 0) {
 								$row = $result->fetch_assoc();
-								echo "<form method='get' action='addToShpCart.php&ID=" . $row['products.ID'] . "q=1'>
+								echo "<form method='get' action='addToShpCart.php'>
 											<div class='product-details'>
 											<h1 class='product-name'>" . $row["Title"] . "</h1>
 												</div>
@@ -112,7 +114,7 @@ session_start();
 											<div class='qty-label'>
 												<div class='input-number' value='1' min=1 max=" . $row["Quantity"] . ">
 												<input type='hidden' name='ID' value='" . $row["ID"] . "'>
-													<input type='number' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Amount"] . "' style='width:30%'/>
+													<input type='number' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Quantity"] . "' style='width:100%'/>
 													<span onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")' class='qty-up'>+</span>
 													<span onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")' class='qty-down'>-</span>
 													</div>
@@ -167,7 +169,7 @@ session_start();
 
 						echo "<li><div id='reviews' class='review-heading'>";
 						$sql = "SELECT * FROM reviews JOIN users ON reviews.UserID = users.ID WHERE ArticleID = $prodID";
-						
+
 						$result = $conn->query($sql);
 						if ($result->num_rows > 0) {
 							while ($row = $result->fetch_assoc()) {
@@ -250,8 +252,6 @@ session_start();
 	<script src="js/nouislider.min.js"></script>
 	<script src="js/jquery.zoom.min.js"></script>
 	<script src="js/main.js"></script>
-	<script type="text/javascript"></script>
-	<script src="javascript/stars.js"></script>
 
 </body>
 

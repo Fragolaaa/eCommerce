@@ -9,9 +9,9 @@ $q = $_GET['q'];
 
 //controllo se loggato
 if (isset($_SESSION["CARTID_"])) {
-    $idCart = $_SESSION["CARTID_"];
+    $CartID = $_SESSION["CARTID_"];
 } else if (isset($_SESSION["CARTID_GuestUser"])) {
-    $idCart = $_SESSION["CARTID_GuestUser"];
+    $CartID = $_SESSION["CARTID_GuestUser"];
 }
 
 

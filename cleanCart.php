@@ -1,5 +1,5 @@
 <?php
-include("/database/connection.php");
+include("database/connection.php");
 session_start();
 
 $CartID;
@@ -12,6 +12,7 @@ if (isset($_SESSION["CARTID_"])) {
 
 if (isset($CartID)) {
     $sql = $conn->prepare("DELETE FROM contains WHERE CartID = ?");
+    echo $con->error;
     $sql->bind_param('i', $CartID);
     $sql->execute();
     header("location: shpCart.php?msg=Clean successfully!&type=success");

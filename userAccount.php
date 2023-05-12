@@ -1,5 +1,5 @@
 <?php
-include("db/connection.php");
+include("database/connection.php");
 session_start();
 
 if (isset($_GET['seller']) && $_GET['seller'] == 1) {

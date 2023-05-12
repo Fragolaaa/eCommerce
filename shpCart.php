@@ -38,10 +38,11 @@ session_start();
            <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
          <![endif]-->
-
 </head>
 
 <body>
+    <script type="text/javascript"></script>
+    <script src="javascript/redirScripts.js"></script>
 
     <div class="cart-page">
         <div class="container-fluid">
@@ -87,15 +88,15 @@ session_start();
                                                     <td>
                                                         <div class='qty'>
                                                             <button class='btn-minus' onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] - 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-minus'></i></button>
-                                                            <input class='pb-1' type='text' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Amount"] . "'>
+                                                            <input class='pb-1' type='text' name='q' value='" . $row["Amount"] . "' min=1 max=" . $row["Quantity"] . "'>
                                                             <button class='btn-plus' onClick='UpdateQty_Cart(" . $row["ID"] . "," . ($row["Amount"] + 1) . ", " . $row["Quantity"] . ")'><i class='fa fa-plus'></i></button>
                                                         </div>
                                                     </td>";
 
                                                 if ($row["Discount"] != 0)
-                                                    echo "<td><s>$" . $row["Price"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Amount"] . "</td>";
+                                                    echo "<td><s>$" . $row["Price"]* $row["Amount"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) * $row["Amount"] . "</td>";
                                                 else
-                                                    echo "<td>$" . $row["Price"] * $row["Quantity"] . "</td>";
+                                                    echo "<td>$" . $row["Price"] * $row["Amount"] . "</td>";
 
                                                 echo "<td><button onClick='RemoveFrom_Cart(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td></tr>";
                                             }
@@ -174,8 +175,7 @@ session_start();
     <script src="js/nouislider.min.js"></script>
     <script src="js/jquery.zoom.min.js"></script>
     <script src="js/main.js"></script>
-    <script type="text/javascript"></script>
-    <script src="javascript/redirScripts.js"></script>
+    
 
 </body>
 

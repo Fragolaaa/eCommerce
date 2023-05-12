@@ -90,7 +90,7 @@
 								<input class="input" type="text" name="LastName" value="' . $row["LastName"] . '" placeholder="Rossi">
 							</div>
 							<div class="form-group">
-								<input class="input" type="email" name="email" value="' . $row["Email"] . '" placeholder="mariorossi@taniexpress.com">
+								<input class="input" type="email" name="Email" value="' . $row["Email"] . '" placeholder="mariorossi@taniexpress.com">
 							</div>
 							<div class="form-group">
 								<input class="input" type="text" name="address" value="' . $row["addresses.Address"] . '" placeholder="Via Roma">
@@ -291,7 +291,7 @@
 								</div>
 							</div>
 							<div class="input-checkbox">
-								<input type="checkbox" id="terms">
+								<input type="checkbox" id="terms" required>
 								<label for="terms">
 									<span></span>
 									I've read and accept the <a href="terms_and_conditions.php">terms &

@@ -52,8 +52,9 @@ if (strcmp($password, $confirmPwd) != 0) {
         //se creato correttamente l'utente creo un suo carrello tramite l'id
         $_SESSION['USERNAME'] = $row['FirstName'];
         $_SESSION['USERNAME'] = $row["ID"];
-        $sql = "SELECT ID FROM users WHERE Email = '$email'";
-        $result = $conn->query($query);
+        $sql = "SELECT ID FROM users WHERE Email = '".$email."'";
+        echo $sql;
+        $result = $conn->query($sql);
         $row = $result->fetch_assoc();
         $ID = $row["ID"];
 

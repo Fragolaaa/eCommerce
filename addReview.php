@@ -1,5 +1,5 @@
 <?php
-include("/database/connection.php");
+include("database/connection.php");
 session_start();
 
 $ProductID = $_GET["ID"];

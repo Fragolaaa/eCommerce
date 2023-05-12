@@ -1,5 +1,5 @@
 <?php
-include "./database/connection.php";
+include "database/connection.php";
 session_start();
 $email = $_POST['email'];
 $password = md5($_POST['password']."_".$email);
