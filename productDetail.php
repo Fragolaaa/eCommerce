@@ -44,6 +44,7 @@ session_start();
 <body>
 	<script type="text/javascript"></script>
 	<script src="javascript/stars.js"></script>
+	<script src="javascript/redirScripts.js"></script>
 
 	<!-- SECTION -->
 	<div class="section">
@@ -152,7 +153,6 @@ session_start();
 						$query = "SELECT COUNT(*) FROM reviews WHERE ArticleID = " . $prodID;
 
 						$result = $conn->query($query);
-
 						$row = $result->fetch_assoc();
 						echo $row["COUNT(*)"];
 
@@ -161,16 +161,14 @@ session_start();
 					
 						<div class="tab-content">
 
-
 								<!-- Reviews -->
 								<div class="col-md-6">
 									<div id="reviews">
 										<ul class="reviews">';
 
 						echo "<li><div id='reviews' class='review-heading'>";
-						$sql = "SELECT * FROM reviews JOIN users ON reviews.UserID = users.ID WHERE ArticleID = $prodID";
-
-						$result = $conn->query($sql);
+						$query = "SELECT * FROM reviews JOIN users ON reviews.UserID = users.ID WHERE ArticleID = " . $prodID;
+						$result = $conn->query($query);
 						if ($result->num_rows > 0) {
 							while ($row = $result->fetch_assoc()) {
 								echo "<div class='reviews-submitted'>
@@ -193,7 +191,7 @@ session_start();
 
 				<div class="col-md-3">
 					<div id="review-form">
-						<form class="review-form">
+						<form action="addReview.php" method="GET">
 							<div class="rating">
 								<i class="far fa-star" name="1" id="1" onclick="setStars(1)"></i>
 								<i class="far fa-star" name="2" id="2" onclick="setStars(2)"></i>
@@ -201,26 +199,25 @@ session_start();
 								<i class="far fa-star" name="4" id="4" onclick="setStars(4)"></i>
 								<i class="far fa-star" name="5" id="5" onclick="setStars(5)"></i>
 							</div>
-							<form action="addReview.php" method="get">
-								<div class="row form">
-									<div class="col-sm-6">
-										<input type="title" name='title' placeholder="Title" required>
-									</div>
-									<div class="col-sm-3">
-										<?php
-										echo "<input type='hidden' name='id' value=" . $_GET['ID'] . ">";
-										?>
-									</div>
-									<div class="col-sm-3">
-										<?php
-										echo "<input type='hidden' name='stars' id='stars' value='0'>";
-										?>
-									</div>
-									<div class="col-sm-12">
-										<textarea placeholder="Review" name='text' required></textarea>
-									</div>
-									<button class="primary-btn">Submit</button>
-							</form>
+							<div class="row form">
+								<div class="col-sm-6">
+									<input type="title" name='title' placeholder="Title" required>
+								</div>
+								<div class="col-sm-3">
+									<?php
+									echo "<input type='hidden' name='ID' value=" . $_GET['ID'] . ">";
+									?>
+								</div>
+								<div class="col-sm-3">
+									<?php
+									echo "<input type='hidden' name='stars' id='stars' value='0'>";
+									?>
+								</div>
+								<div class="col-sm-12">
+									<textarea placeholder="Review" name='text' required></textarea>
+								</div>
+								<button class="primary-btn">Submit</button>
+						</form>
 					</div>
 				</div>
 				<!-- /Review Form -->

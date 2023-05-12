@@ -42,6 +42,8 @@ session_start();
 </head>
 
 <body>
+<script type="text/javascript"></script>
+<script src="javascript/redirScripts.js"></script>
 
 	<?php
 	$sql = "";
@@ -57,8 +59,8 @@ session_start();
 			while ($row = $result->fetch_assoc()) {
 				echo "<tr>
                                                     <td>
-                                                        <div class='img pl-2'>
-                                                            <a href='product-detail.php?id=" . $row["ID"] . "'><img src='img/product-" . $row["ID"] . ".jpg' alt='Image'></a>
+													<div class='img pl2'>
+                                                            <a href='products.php?id=" . $row["ID"] . "'><img src='imgs/product-" . $row["ID"] . ".jpg' alt='Image'></a>
                                                             <p>" . $row["Title"] . "</p>
                                                         </div>
                                                     </td>";
@@ -66,8 +68,8 @@ session_start();
 					echo "<td><s>$" . $row["Price"] . "</s> $" . round($row["Price"] * (100 - $row["Discount"]) / 100, 2) . "</td>";
 				else
 					echo "<td>$" . $row["Price"] . "</td>";
-				echo "  <td><button class='btn-cart' onclick='addTo_Cart(" . $row["ID"] . ", 1)'>Add to Cart</button></td> 
-                                                            <td><button onclick='removeFrom_WishList(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td>
+				echo "  <td><button class='btn-cart' onclick='AddTo_Cart(" . $row["ID"] . ", 1)'>Add to Cart</button></td> 
+                                                            <td><button onclick='RemoveFrom_Wishlist(" . $row["ID"] . ")'><i class='fa fa-trash'></i></button></td>
                                                         </tr>";
 			}
 		} else {

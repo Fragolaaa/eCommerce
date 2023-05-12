@@ -63,7 +63,7 @@
 	<!-- /BREADCRUMB -->
 
 	<!-- SECTION -->
-	<form action="chkOrder.php" method="Post">
+	<form action="chkOrder.php" method="POST">
 		<div class="section">
 			<!-- container -->
 			<div class="container">
@@ -109,7 +109,16 @@
 							</div>
 							<div class="form-group">
 								<input class="input" type="tel" name="tel"value="' . $row["PhoneNumber"] . '" placeholder="+391232467891">
-							</div>';
+							</div>
+							<div class="form-group">
+							<div class="input-checkbox">
+								<input type="checkbox" id="save" name="save" checked>
+								<label for="save">
+									<span></span>
+									Save address?
+								</label>
+							</div>
+						</div>';
 						} else
 							echo '<div class="billing-details">
 						<div class="section-title">
@@ -144,8 +153,8 @@
 						</div>
 						<div class="form-group">
 							<div class="input-checkbox">
-								<input type="checkbox" id="saveAddress" name="saveAddress">
-								<label for="Save address">
+								<input type="checkbox" id="save" name="save">
+								<label for="save">
 									<span></span>
 									Save address?
 								</label>

@@ -9,9 +9,9 @@ if ($_GET["stars"] != 0) {
         $sql = $conn->prepare("INSERT INTO reviews (ArticleID, UserID, Title, Content, Stars) VALUES (?, ?, ?, ?, ?)");
         $sql->bind_param('iissi', $ProductID, $_SESSION["ID"], $_GET["title"], $_GET["text"], $_GET["stars"]);
         $sql->execute();
-        header("location: products.php?id=$ProductID&msg=Review added successfully!&type=success");
+        header("location: productDetail.php?ID=$ProductID&msg=Review added successfully!&type=success");
     } else
         header("location: login.php?msg=Log in to review!&type=warning");
 } else {
-    header("location: products.php?id=$ProductID&msg=Stars must be al least one!&type=warning");
+    header("location: productDetail.php?ID=$ProductID&msg=Stars must be at least one!&type=warning");
 }

@@ -9,17 +9,18 @@ $result = $sql->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    if ($row["ID"] == null)
-        echo "ciao";
     $ShippingAddressID = $row["ID"];
 } else {
     //se non presente inserisco
-    if (isset($_SESSION["ID"])) {
-        if (isset($_POST["saveAddress"])) {
+    if (isset($_SESSION['ID'])) {
+        echo $_POST['address'];
+        if (isset($_POST["save"])) {
+            echo 1;
             $sql = $conn->prepare("INSERT INTO `addresses` (`Address`, `ZIPcode`, `Country`, `City`, `Province`, `ShippingDefault`, `UserID`) VALUES (?, ?, ?, ?, ?, 0, ?)");
-            $sql->bind_param('sssssi', $_POST["address"], $_POST["country"], $_POST["city"], $_POST["province"], $_POST["zip-code"], $_SESSION["ID"]);
+            $sql->bind_param('sssssi', $_POST["address"], $_POST["zip-code"], $_POST["country"], $_POST["city"], $_POST["province"], $_SESSION["ID"]);
             $sql->execute();
             $ShippingAddressID = $conn->insert_id;
+            echo "$ShippingAddressID";
         }
     } else {
         header("location: login_page.php&msg=Login first!");
@@ -31,7 +32,7 @@ if ($result->num_rows > 0) {
 $date = new DateTime('now');
 $date->add(new DateInterval('P7D'));
 $DelDate = $date->format("Y-m-d");
-
+$date = $date->format('Y-m-d');
 //PAYMENT METHOD
 if (isset($_POST["payment"])) {
     if ($_POST["payment"] == "paypal") {
@@ -86,56 +87,57 @@ else if (isset($_SESSION["CARTID_GuestUser"]))
 
 $shippingCost = 4.99;
 
-echo "\n" . $ShippingAddressID . " , " . $PaymentMethodID . " , " . $CartID;
-// if (isset($ShippingAddressID) && isset($PaymentMethodID) && isset($CartID)) {
+//echo "\n" . $ShippingAddressID . " , " . $PaymentMethodID . " , " . $CartID;
+if (isset($ShippingAddressID) && isset($PaymentMethodID) && isset($CartID)) {
 
-//     $sql = $conn->prepare("SELECT ArticleID, Title, Quantity, Amount FROM contains JOIN products ON ArticleID = ID WHERE CartID = ?");
-//     $sql->bind_param('i', $CartID);
-//     $sql->execute();
-//     $result = $sql->get_result();
+    $sql = $conn->prepare("SELECT ArticleID, Title, Quantity, Amount FROM contains JOIN products ON ArticleID = ID WHERE CartID = ?");
+    $sql->bind_param('i', $CartID);
+    $sql->execute();
+    $result = $sql->get_result();
 
-//     if ($result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             if ($row["Quantity"] == 0) {
-//                 header("location: shpCart.php?msg=" . $row["Title"] . " not available!&type=danger");
-//                 exit;
-//             }
-//             //update db
-//             $sql = $conn->prepare("UPDATE products SET Quantity= ? WHERE Id = ?");
-//             $newPieces = $row["Quantity"] - $row["Amount"];
-//             $sql->bind_param('ii', $newPieces, $row["ArticleID"]);
-//             $sql->execute();
-//         }
-//     } else {
-//         header("location: shpCart.php");
-//         exit;
-//     }
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            if ($row["Quantity"] == 0) {
+                header("location: shpCart.php?msg=" . $row["Title"] . " not available!&type=danger");
+                exit;
+            }
+            //update db
+            $sql = $conn->prepare("UPDATE products SET Quantity= ? WHERE Id = ?");
+            $newPieces = $row["Quantity"] - $row["Amount"];
+            $sql->bind_param('ii', $newPieces, $row["ArticleID"]);
+            $sql->execute();
+        }
+    } else {
+        header("location: shpCart.php");
+        exit;
+    }
 
+    $ship = 4.99;
 
-//     $sql = $conn->prepare("INSERT INTO orders (OrderDate, DeliveryDate, ShippingCost, ShippingAddressID, PaymentMethodID, CartID) VALUES (?, ?, ?, ?, ?,?)");
-//     $sql->bind_param('ssfiii', $date, $DelDate, 4.99, $ShippingAddressID, $PaymentMethodID, $CartID);
-//     $sql->execute();
-//     if (isset($_SESSION["CARTID_"])) {
-//         $sql = $conn->prepare("INSERT INTO shopping_cart (UserID) VALUES (?)");
-//         $sql->bind_param('i', $_SESSION["ID"]);
-//         $sql->execute();
+    $sql = $conn->prepare("INSERT INTO orders (OrderDate, DeliveryDate, ShippingCost, ShippingAddressID, PaymentMethodID, CartID) VALUES (?, ?, ?, ?, ?,?)");
+    $sql->bind_param('ssdiii', $date, $DelDate, $ship, $ShippingAddressID, $PaymentMethodID, $CartID);
+    $sql->execute();
+    if (isset($_SESSION["CARTID_"])) {
+        $sql = $conn->prepare("INSERT INTO shopping_cart (UserID) VALUES (?)");
+        $sql->bind_param('i', $_SESSION["ID"]);
+        $sql->execute();
 
-//         $NewCartID = $conn->insert_id;
+        $NewCartID = $conn->insert_id;
 
-//         $_SESSION["CARTID_"] = $NewCartID;
-//     } else if (isset($_SESSION["CARTID_GuestUser"])) {
-//         $sql = $conn->prepare("INSERT INTO shopping_cart () VALUES ()");
-//         $sql->execute();
+        $_SESSION["CARTID_"] = $NewCartID;
+    } else if (isset($_SESSION["CARTID_GuestUser"])) {
+        $sql = $conn->prepare("INSERT INTO shopping_cart () VALUES ()");
+        $sql->execute();
 
-//         $NewCartID = $conn->insert_id;
+        $NewCartID = $conn->insert_id;
 
-//         $_SESSION["CARTID_GuestUser"] = $NewCartID;
+        $_SESSION["CARTID_GuestUser"] = $NewCartID;
 
-//         //aggiorno cookie
-//         $cookie_name = "CARTID_GuestUser";
-//         $cookie_value = $NewCartID;
-//         setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1  
-//     }
-//     //header("location: resume.php?msg=success!&type=success");
-// } else
-//     header("location: shpCart.php?msg=You must pay!&type=warning");
+        //aggiorno cookie
+        $cookie_name = "CARTID_GuestUser";
+        $cookie_value = $NewCartID;
+        setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1  
+    }
+    header("location: resume.php?msg=success!&type=success");
+} else
+    header("location: shpCart.php?msg=You must pay!&type=warning");
