@@ -22,10 +22,10 @@ function RemoveFrom_Wishlist(id) {
     window.location = "rmvFromWishList.php?ID=" + id;
 }
 
-// function Delete_Product(id) {
-//     window.location = "dltProduct.php?id=" + id;
-// }
+function Delete_Product(id) {
+    window.location = "dltProduct.php?ID=" + id;
+}
 
-// function Delete_PaymentMethod(id) {
-//     window.location = "dltPaymentMethod.php?id=" + id;
-// }
+function Delete_PaymentMethod(id) {
+    window.location = "dltPaymentMethod.php?ID=" + id;
+}
