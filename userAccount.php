@@ -50,6 +50,9 @@ if (isset($_GET['seller']) && $_GET['seller'] == 1) {
 </head>
 
 <body>
+	<script type="text/javascript"></script>
+	<script src="javascript/redirScripts.js"></script>
+
 	<!-- HEADER -->
 	<?php include "navbar.php" ?>
 	<!-- /NAVIGATION -->
@@ -282,16 +285,16 @@ if (isset($_GET['seller']) && $_GET['seller'] == 1) {
 	</div>
 
 
-			<?php include "footer.php" ?>
-			<!-- /FOOTER -->
+	<?php include "footer.php" ?>
+	<!-- /FOOTER -->
 
-			<!-- jQuery Plugins -->
-			<script src="js/jquery.min.js"></script>
-			<script src="js/bootstrap.min.js"></script>
-			<script src="js/slick.min.js"></script>
-			<script src="js/nouislider.min.js"></script>
-			<script src="js/jquery.zoom.min.js"></script>
-			<script src="js/main.js"></script>
+	<!-- jQuery Plugins -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/slick.min.js"></script>
+	<script src="js/nouislider.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/main.js"></script>
 
 </body>
 
