@@ -24,13 +24,12 @@ echo "<div class='row'>";
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
+       
+
         if ($row["Discount"] != 0)
             $discountedPrice = round($row["Price"] * (100 - $row["Discount"]) / 100, 2);
 
-        if ($r == 3) {
-            $r = 1;
-            echo "<div class='row'>";
-        }
+            
 
         echo "<div class='col-md-4'><a href='productDetail.php?ID=" . $row['ID'] . "'>
                                             <div class='product'>
@@ -68,6 +67,10 @@ if ($result->num_rows > 0) {
 										</div>
                                         </div></div>";
         $r += $r;
+        if ($r == 3) {
+            $r = 1;
+            echo "<div class='row'>";
+        }
 
     }
 }

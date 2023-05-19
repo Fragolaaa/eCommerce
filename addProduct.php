@@ -4,22 +4,22 @@ include("database/connection.php");
 
 $msg = "";
 
-if ($_FILES["fileToUpload"]["tmp_name"] != null && $_POST["description"] != null && $_POST["title"] != null && $_POST["conditions"] != null && $_POST["price"] != null && $_POST["discount"] != null &&  $_POST["pieces"] != null &&  $_POST["category"] != null) {
-    $sql = $conn->prepare("SELECT Id FROM categories WHERE Type = ?");
+if ($_FILES["fileToUpload"]["tmp_name"] != null && $_POST["description"] != null && $_POST["title"] != null && $_POST["state"] != null && $_POST["price"] != null && $_POST["discount"] != null &&  $_POST["quantity"] != null &&  $_POST["category"] != null) {
+    $sql = $conn->prepare("SELECT ID FROM categories WHERE Type = ?");
     $sql->bind_param('s', $_POST["category"]);
     $sql->execute();
 
     $result = $sql->get_result();
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $categoryId = $row["Id"];
-        $sql = $conn->prepare("INSERT INTO articles (Title, `Description`, Seller, Conditions, Price, Discount, Pieces, IdCategory) VALUES (?,?,?,?,?,?,?,?)");
-        $sql->bind_param('ssssddii', $_POST["title"], $_POST["description"], $_SESSION["Username"], $_POST["conditions"], $_POST["price"], $_POST["discount"], $_POST["pieces"], $categoryId);
+        $categoryID = $row["ID"];
+        $sql = $conn->prepare("INSERT INTO products (Title, `Description`, Seller, State, Price, Discount, QUantity, CategoryID) VALUES (?,?,?,?,?,?,?,?)");
+        $sql->bind_param('ssssddii', $_POST["title"], $_POST["description"], $_SESSION["USERNAME"], $_POST["state"], $_POST["price"], $_POST["discount"], $_POST["quantity"], $categoryID);
         $sql->execute();
 
         $id = $conn->insert_id;
 
-        $target_dir = "../img/";
+        $target_dir = "imgs/";
         $target_file = $target_dir . "product-$id.jpg";
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -58,4 +58,4 @@ if ($_FILES["fileToUpload"]["tmp_name"] != null && $_POST["description"] != null
 } else {
     $msg .= "Error while adding the article!&type=danger";
 }
-header("location:../my-account.php?pag=seller&msg=$msg");
+header("location:userAccount.php?msg=$msg");

@@ -25,6 +25,9 @@ function RemoveFrom_Wishlist(id) {
 function Delete_Product(id) {
     window.location = "dltProduct.php?ID=" + id;
 }
+function Update_Product(id) {
+    window.location = "UpdateProduct.php?ID=" + id;
+}
 
 function Delete_PaymentMethod(id) {
     window.location = "dltPaymentMethod.php?ID=" + id;

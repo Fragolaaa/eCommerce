@@ -102,18 +102,21 @@ if (isset($_GET['seller']) && $_GET['seller'] == 1) {
 			?>
 			<input type="submit" value="Submit" class="btn">
 		</div>
-
+		<br>
 	</form>
 	</div>
-
-	<div>
+	<div class="container">
 		<h4><b>Seller</b></h4>
 
 		<?php
 		$sql = $conn->prepare("SELECT Seller FROM users WHERE ID = ?");
 		$sql->bind_param('i', $_SESSION["ID"]);
 		$sql->execute();
+
 		$result = $sql->get_result();
+		$sql = "SELECT * FROM users WHERE ID = '" . $_SESSION["ID"] . "'";
+
+		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
 			$row = $result->fetch_assoc();
@@ -136,7 +139,7 @@ if (isset($_GET['seller']) && $_GET['seller'] == 1) {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <p><h5 class='text-center'>Articles on sale</h5></p>";
+                                                    <p><h5 class='text-center'>Products on sale</h5></p>";
 				if ($result->num_rows > 0) {
 					while ($row = $result->fetch_assoc()) {
 						echo "<tr>
@@ -147,142 +150,155 @@ if (isset($_GET['seller']) && $_GET['seller'] == 1) {
                                                     <td>" . $row['Quantity'] . "</td>
                                                     <td>" . $row['State'] . "</td>
                                                     <td>" . $row['Type'] . "</td>
-                                                    <td><button class='btn' data-toggle='modal' data-target='#myModalSeller' onclick='caricaModalSeller(" . $row['ID'] . ")'><i class='bi bi-pencil-square'></i></button>
-                                                    <button onclick='toDeleteArticle(" . $row['ID'] . ")' class='btn'><i class='bi bi-trash'></i></button></td>
+                                                    <td><button class='btn' onclick='location: Update_Product.php?ID=" . $row['ID'] . "'><i class='bi bi-pencil-square'></i></button>
+                                                    <button onclick='Delete_Product(" . $row['ID'] . ")' class='btn'><i class='bi bi-trash'></i></button></td>
                                                     </tr>";
 					}
-					echo "  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td><button data-toggle='modal' data-target='#myModalAdd'  class='btn'>Add new</button></td></tr>
+					echo "  <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                                                 </tbody>
                                                 </table>";
 				} else
-					echo "<tr><td>No articles on sale...</td><td></td><td></td><td></td><td></td><td></td><td></td><td><button data-toggle='modal' data-target='#myModalAdd' class='btn'>Add new</button></td></tr></tbody></table>";
+					echo "<tr><td>No articles on sale...</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>";
 			} else
-				echo "<h5>Do you want to become a seller?</h5>
+				echo "<h5>Want to become a seller?</h5>
                         <a href='userAccount.php?pag=seller&seller=1'>start selling</a> on Taniexpress";
 		}
-		?>
+		echo "<div>
 		<div>
-			<div>
-				<div>
-					<div>
-						<h4>New Article</h4>
-					</div>
-					<div>
-						<form id='formAdd' method='post' action='check/addProduct.php' enctype='multipart/form-data'>
-							<p>
-								Select image to upload:
-								<input type='file' name='fileToUpload' id='fileToUpload' required>
-							</p>
-							<div class='row'>
-								<div class='col-md-3'>Title: </div>
-								<div class='col-md-3'><input type='text' name='title' class='form-control w-auto'
-										required></div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>Description: </div>
-								<div class='col-md-3'><textArea name='description' class='form-control w-auto'
-										required></textArea></div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>State: </div>
-								<div class='col-md-3'>
-									<select name='state' class='form-control w-auto' required>
-										<option hidden>State</option>
-										<option value='New'>New</option>
-										<option value='Used'>Used</option>
-									</select>
-								</div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>Price: </div>
-								<div class='col-md-3'><input type='number' name='price' min=0
-										class='form-control w-auto' required></div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>Discount: </div>
-								<div class='col-md-3'><input type='number' name='discount' min=0
-										class='form-control w-auto' required></div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>Quantity: </div>
-								<div class='col-md-3'><input type='number' name='quantity' min=1
-										class='form-control w-auto' required></div>
-							</div>
-							<div class='row'>
-								<div class='col-md-3'>Category: </div>
-								<div class='col-md-3'>
-									<select name='category' class='form-control w-auto' required>
-										<option hidden>Choose here</option>
-										<?php
-										include("database/connection.php");
-										$sql = $conn->prepare("SELECT * FROM categories");
-										$sql->execute();
-										$result = $sql->get_result();
-										if ($result->num_rows > 0) {
-											while ($row = $result->fetch_assoc()) {
-												$type = $row["Type"];
-												echo "<option value='$type'>$type</option>";
-											}
-										}
-										?>
-									</select>
-								</div>
-							</div>
-						</form>
-					</div>
-					<div>
-						<button class='btn' onclick="$('#formAdd').submit();">Add</button>
-						<button type='button' class='btn btn-default'>Cancel</button>
-					</div>
+			<div>";
+		$sql = $conn->prepare("SELECT Seller FROM users WHERE ID = ?");
+		$sql->bind_param('i', $_SESSION["ID"]);
+		$sql->execute();
+
+		$result = $sql->get_result();
+		$sql = "SELECT * FROM users WHERE ID = '" . $_SESSION["ID"] . "'";
+
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			if ($row["Seller"] == 1) {
+				echo "<div>
+					<h4>New Article</h4>
 				</div>
+				<div>
+					<form id='formAdd' method='post' action='addProduct.php' enctype='multipart/form-data'>
+						<p>
+							Select image to upload:
+							<input type='file' name='fileToUpload' id='fileToUpload' required>
+						</p>
+						<div class='row'>
+							<div class='col-md-3'>Title: </div>
+							<div class='col-md-3'><input type='text' name='title' class='form-control w-auto'
+									required></div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>Description: </div>
+							<div class='col-md-3'><textArea name='description' class='form-control w-auto'
+									required></textArea></div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>State: </div>
+							<div class='col-md-3'>
+								<select name='state' class='form-control w-auto' required>
+									<option hidden>State</option>
+									<option value='New'>New</option>
+									<option value='Used'>Used</option>
+								</select>
+							</div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>Price: </div>
+							<div class='col-md-3'><input type='number' name='price' min=0
+									class='form-control w-auto' required></div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>Discount: </div>
+							<div class='col-md-3'><input type='number' name='discount' min=0
+									class='form-control w-auto' required></div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>Quantity: </div>
+							<div class='col-md-3'><input type='number' name='quantity' min=1
+									class='form-control w-auto' required></div>
+						</div>
+						<div class='row'>
+							<div class='col-md-3'>Category: </div>
+							<div class='col-md-3'>
+								<select name='category' class='form-control w-auto' required>
+									<option hidden>Choose here</option>";
+
+				$sql = $conn->prepare('SELECT * FROM categories');
+				$sql->execute();
+				$result = $sql->get_result();
+				if ($result->num_rows > 0) {
+					while ($row = $result->fetch_assoc()) {
+						$type = $row['Type'];
+						echo "<option value='$type'>$type</option>";
+					}
+				}
+				echo "
+								</select>
+							</div>
+						</div>
+						<input type='submit' class='btn' value='Add'>
+						<input type='reset' class='btn btn-default' value='Cancel'>
+					</form>
+				</div>
+				<div>";
+			}
+		}
+		echo "</div>
 			</div>
 		</div>
 	</div>
-
+</div><br>
+<div class='container'>
 	<div>
-		<div>
-			<table>
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Shipping Costs</th>
-						<th>Shipping Address</th>
-						<th>Payment Method</th>
-						<th>Submission Date</th>
-						<th>Delivery Date</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<h4><b>Orders</b></h4>
-					<?php
-					$sql = "SELECT orders.ID, ShippingCosts, ShippingAddressID, PaymentMethodID, OrderDate, DeliveryDate
-                                                FROM orders
-                                                JOIN shopping_carts ON orders.CartID = shopping_carts.ID
-                                                WHERE shopping_carts.UserID = " . $_SESSION["ID"];
-					$result = $conn->query($sql);
+		<table>
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Shipping Costs</th>
+					<th>Shipping Address</th>
+					<th>Payment Method</th>
+					<th>Submission Date</th>
+					<th>Delivery Date</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<h4><b>Orders</b></h4>";
+		include("database/connection.php");
+		$sql = 'SELECT orders.ID, ShippingCost, ShippingAddressID, PaymentMethodID, OrderDate, DeliveryDate
+											FROM orders
+											JOIN shopping_cart ON orders.CartID = shopping_cart.ID
+											WHERE shopping_cart.UserID = ' . $_SESSION['ID'];
+		$result = $conn->query($sql);
 
-					if ($result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							echo "
-                                                    <tr>
-                                                        <td>" . $row["ID"] . "</td>
-                                                        <td>$" . $row["ShippingCosts"] . "</td>
-                                                        <td><a class='noChangeColorLink' href='my-account.php?pag=address'>" . $row["ShippingAddressID"] . "</a></td>
-                                                        <td><a class='noChangeColorLink' href='my-account.php?pag=payment'>" . $row["PaymentMethodID"] . "</a></td>
-                                                        <td>" . $row["OrderDate"] . "</td>
-                                                        <td>" . $row["DeliveryDate"] . "</td>
-                                                        <td><button class='btn' onclick='caricaPopupModal(" . $row["ID"] . ")'>View</button></td>
-                                                    </tr>";
-						}
-					} else {
-						echo "<tr><td>No orders here......</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
-					}
-					?>
-				</tbody>
-			</table>
-		</div>
+		if ($result->num_rows > 0) {
+			while ($row = $result->fetch_assoc()) {
+				echo "
+												<tr>
+													<td>" . $row["ID"] . "</td>
+													<td>$" . $row["ShippingCost"] . "</td>
+													<td><a class='noChangeColorLink' href='userAccount.php?pag=address'>" . $row["ShippingAddressID"] . "</a></td>
+													<td><a class='noChangeColorLink' href='userAccount.php?pag=payment'>" . $row["PaymentMethodID"] . "</a></td>
+													<td>" . $row["OrderDate"] . "</td>
+													<td>" . $row["DeliveryDate"] . "</td>
+												</tr>";
+			}
+		} else {
+			echo '<tr><td>No orders here......</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+		}
+
+		?>
+		</tbody>
+		</table>
 	</div>
+	</div>
+
+
 
 
 	<?php include "footer.php" ?>
